@@ -27,6 +27,6 @@ cd budget
 mvn clean install package  
 Deploy .war in package directory on tomcat server  
 
-#Login/Security
+# Login/Security
 This application uses Spring Security 
 To login using the H2 in-memory database, a user with credentials admin/admin is automatically populated
