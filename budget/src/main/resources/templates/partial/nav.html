@@ -1,0 +1,27 @@
+<div class="row no-gutters">
+	<div class="col">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+			<div class="w-100 text-center mx-auto">
+				<a th:href="@{/}"><img class="logo d-flex mx-auto" th:src="@{/images/favicon.png}"></a>
+				<a th:href="@{/}" class="navbar-header text-white">Monthly Cash Budgets</a>
+			</div>
+			<div class="dropdown user-btn">
+				<a class="dropdown-toggle user-btn" data-toggle="dropdown" href="#"
+					sec:authentication="principal.fullName"><span class="caret"></span></a>
+				<ul class="dropdown-menu dropdown-menu-right nav-dropdown-menu"
+					style="margin-top: -18px">
+					<li><a class="dropdown-item" href="javascript:void(0)"
+						onclick="notImplimented()">Change Password</a></li>
+					<li><a class="dropdown-item" href="javascript:void(0)"
+						onclick="notImplimented()">User Access Control</a></li>
+					<li><a class="dropdown-item logout" href="javascript:void(0)"
+						onclick="$('#logoutForm').submit()">Logout</a></li>
+				</ul>
+				<form id="logoutForm" th:attr="action=@{/logout}" method="POST"></form>
+			</div>
+			<div class="btn btn-success create-budget" onclick="openNewBudgetModal()">
+				+ Add Budget
+			</div>
+		</nav>
+	</div>
+</div>

@@ -1,0 +1,48 @@
+<html>
+	<head>
+		<title>Budgets</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no maximum-scale=1.0,user-scalable=0, minimal-ui" />
+		<meta name="apple-mobile-web-app-title" content="Budget">
+		<meta property="og:title" content="Budget"/>
+		<meta property="og:image" th:attr="content=@{/images/favicon.png}" />
+		<link rel="shortcut icon" th:href="@{/images/favicon.png}" type="image/x-icon">
+		<link rel="apple-touch-icon" th:href="@{/images/favicon.png}">
+		<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+		<link rel="stylesheet" th:href="@{/css/site.css}" />
+		<script th:src="@{/js/lib/jquery-3.3.1.min.js}"></script>
+		<script th:src="@{/js/lib/jquery-ui.min.js}"></script>
+		<script th:src="@{/js/lib/jquery.ui.touch-punch.min.js}"></script>
+		<script th:src="@{/js/lib/bootstrap.bundle.js}"></script>
+		<script th:src="@{/js/site.js}"></script>
+		<script th:src="@{/js/form-validation.js}"></script>
+		<script th:inline="javascript">
+			var contextpath = /*[[@{/}]]*/;
+		</script>
+	</head>
+	<body>
+		<th:block th:replace="partial/nav"></th:block>
+			<div class="row no-gutters">
+				<div class="col text-center">
+					<div class="bg-white d-inline-block body-container">
+						<form id="focusedBudgetForm" method="post" th:action="@{/budget/edit}">
+							<th:block th:replace="dynamic/focused-budget :: focusedBudget(${budgets == null || #lists.isEmpty(budgets)? null: budgets.get(0)})"></th:block>
+						</form>
+					</div>
+					<div class="budgets-selector">
+						<th:block th:replace="partial/budget-picker"></th:block>
+					</div>
+				</div>
+			</div>
+		<th:block th:replace="modal/new-budget"></th:block>
+		<th:block th:replace="modal/email-budget"></th:block>
+		<th:block th:replace="modal/new-template"></th:block>
+		<th:block th:replace="modal/edit-template"></th:block>
+		<th:block th:replace="partial/alerts"></th:block>
+		<div class="collapse partial-container">
+			<table><tbody>
+				<th:block th:replace="partial/budget-row :: budgetRow(null)"></th:block>
+			</tbody></table>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,21 @@
+<div class="modal fade" id="emailBudgetModal">
+	<div class="modal-dialog modal-md" role="document">
+		<div class="modal-content">
+			<div class="modal-header">Email Budget</div>
+			<div class="modal-body">
+				<div class="row no-gutters">
+					<div class="col text-center">
+						<form id="emailBudgetForm">
+							<input type="hidden" class="budget-id" name="budgetId">
+							<input class="form-control required" type="text" placeholder="Enter email addresses separated by commas" title="Enter email address" name="emailTo">
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="submit" class="btn btn-info" form="emailBudgetForm">Send</button>
+			</div>
+		</div>
+	</div>
+</div>

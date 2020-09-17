@@ -1,0 +1,109 @@
+<th:block th:fragment="focusedBudget(budget)">
+	<th:block th:if="${budget != null}">
+		<div class="row no-gutters pt-5">
+			<div class="col text-center">
+				<h2 class="focused-budget-name" th:text="${budget.name}"></h2>
+				<div class="position-absolute saved-indicator saved">Saved <span>&#10003;</span></div>
+				<div class="position-absolute saved-indicator saving collapse">Saving...</div>
+				<div class="position-absolute saved-indicator save-failed collapse text-danger">Save Failed!</div>
+				<div class="position-absolute action-icon" th:attr="onclick=${'downloadPdf(' + budget.id + ')'}"><img th:src="@{/images/download.png}"></div>
+				<div class="position-absolute action-icon ml-5" th:attr="onclick=${'emailBudget(' + budget.id + ')'}"><img th:src="@{/images/email.png}"></div>
+				<input type="hidden" class="focused-budget-id" th:value="${budget.id}">
+			</div>
+		</div>
+		<div class="row no-gutters text-center mt-2">
+			<div class="col">
+				<table class="focused-budget-table table table-striped table-hover  mb-0">
+					<thead class="table-info bg-table-custom">
+						<tr>
+							<th >Budget Item</th>
+							<th class="text-right">Amount</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="item: ${budget.items}">
+							<td class="item-label-cell">
+								<div class="text-center d-inline-block pr-3">
+									<div class="remove-row bg-danger ml-1">-</div>
+								</div>
+								<div class="editable-item item-name d-inline-block" th:text="${item.name}">
+								</div>
+							</td>
+							<td>
+								<div class="text-right">
+									$<span class="editable-item item-amount currency" th:text="${#numbers.formatDecimal(item.amount, 1, 'DEFAULT', 2, 'DEFAULT')}"></span>
+								</div>
+							</td>
+						</tr>
+						<tr class="collapse new-focused-row">
+							<td class="item-label-cell">
+								<div class="text-center d-inline-block pr-3">
+									<div class="remove-row bg-danger ml-1">-</div>
+								</div>
+								<div class="item-name d-inline-block">
+									<input class="dynamic-input new-row">
+								</div>
+							</td>
+							<td>
+								<div class="text-right">
+									$<span class="item-amount currency">
+										<input class="dynamic-input new-row">
+									</span>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<hr class="mt-0 mb-0">
+			</div>
+		</div>
+		<div class="row no-gutters">
+			<div class="col text-center">
+				<div class="position-absolute w-100">
+					<div class="btn btn-success insert-row icon">+</div>
+<!-- 					<img class="insert-row icon" th:src="@{/images/insert_row.png}"> -->
+				</div>
+			</div>
+		</div>
+		<div class="row no-gutters text-center bill-calculator table-info bg-table-custom pt-2">
+			<div class="col-2">
+				<div>$100 &times; <span class="bill-count 100">0</span></div>
+			</div>
+			<div class="col-2">
+				<div>$50 &times; <span class="bill-count 50">0</span></div>
+			</div>
+			<div class="col-2">
+				<div>$20 &times; <span class="bill-count 20">0</span></div>
+			</div>
+			<div class="col-2">
+				<div>$10 &times; <span class="bill-count 10">0</span></div>
+			</div>
+			<div class="col-2">
+				<div>$5 &times; <span class="bill-count 5">0</span></div>
+			</div>
+			<div class="col-2">
+				<div>$1 &times; <span class="bill-count 1">0</span></div>
+			</div>
+		</div>
+		<div class="row no-gutters pt-2 table-info bg-table-custom">
+			<div class="col">
+				<div class="text-right pr-2">
+					Total: $<span class="total" th:text="${#numbers.formatDecimal(#aggregates.sum(budget.items.![amount]), 1, 'DEFAULT', 2, 'DEFAULT')}">0.00</span>
+				</div>
+			</div>
+		</div>
+		<script>
+			$(document).ready(function(){
+				updateBillCalculator();
+				sortTable('.focused-budget-table');
+			});
+		</script>
+	</th:block>
+	<th:block th:if="${budget == null}">
+		<div class="row h-100 w-100 no-gutters">
+			<div class="col text-center pt-5">
+				<h2>No budgets have been created yet :(</h2>
+			</div>
+		</div>
+	</th:block>
+</th:block>

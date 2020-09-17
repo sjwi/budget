@@ -1,0 +1,37 @@
+<div class="modal fade" id="createTemplateModal">
+	<div class="modal-dialog modal-xl" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<div class="row w-100">
+					<div class="col">
+						<h5 class="modal-title">
+							Create New Template
+						</h5>
+					</div>
+				</div>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="row no-gutters no-gutters">
+					<div class="col-2"></div>
+					<div class="col-md-8">
+						<select class="form-control starting-template">
+							<option selected value="0">Select to start from previous template</option>
+							<option th:if="${!#lists.isEmpty(templates)}" th:each="template, iter :${templates}" th:value="${template.id}" th:text="${template.name}"></option>
+						</select>
+					</div>
+				</div>
+				<hr>
+				<form id="newTemplateForm" class="template-form" th:action="@{/create/template}" method="POST">
+					<th:block th:replace="dynamic/template-form :: templateForm(null)"></th:block>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="submit" class="btn btn-info" form="newTemplateForm">Create</button>
+			</div>
+		</div>
+	</div>
+</div>

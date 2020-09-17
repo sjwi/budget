@@ -1,0 +1,19 @@
+<th:block th:fragment="budgetRow(item)">
+	<tr class="budget-row">
+		<td>
+			<input th:value="${item == null? '': item.name}" type="text" class="form-control item-name" placeholder="Item name..." name="item_name" title="Enter a budget item">
+		</td>
+		<td class="align-middle">
+			<div class="row no-gutters">
+				<div class="col">
+					<div class="form-group mb-0 row no-gutters">
+						<label class="col-form-label col-1 mr-1">$</label><input type="text" th:value="${item == null? '': #numbers.formatDecimal(item.amount, 1, 'DEFAULT', 2, 'DEFAULT')}" class="form-control col text-right pr-2 item-amount currency"  name="item_amount" placeholder="0.00" title="Enter a decimal value in the budget amount">
+					</div>
+				</div>
+				<div class="col col-1 text-center my-auto remove-row-container collapse">
+					<div class="remove-row bg-danger ml-1">-</div>
+				</div>
+			</div>
+		</td>
+	</tr>
+</th:block>

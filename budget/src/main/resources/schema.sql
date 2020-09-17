@@ -1,0 +1,41 @@
+DROP TABLE IF EXISTS BudgetMaster;
+CREATE TABLE BudgetMaster (
+  ID int(11) NOT NULL AUTO_INCREMENT,
+  NAME varchar(50) NOT NULL,
+  LAST_USED datetime NOT NULL,
+  IS_TEMPLATE int(1) NOT NULL DEFAULT 0,
+  DISABLED int(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (ID)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS Item;
+CREATE TABLE Item (
+  ID int(11) NOT NULL AUTO_INCREMENT,
+  BUDGET_ID int(11) NOT NULL,
+  NAME varchar(50) NOT NULL,
+  AMOUNT DECIMAL(13,2) NOT NULL,
+  PRIMARY KEY (ID)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS Users;
+CREATE TABLE Users (
+  USERNAME varchar(50) NOT NULL,
+  PASSWORD varchar(100) NOT NULL,
+  FIRSTNAME varchar(100) NOT NULL,
+  LASTNAME varchar(100) NOT NULL,
+  EMAIL varchar(100) NOT NULL,
+  enabled tinyint(4) NOT NULL DEFAULT '1',
+  PRIMARY KEY (username)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO Users VALUES ('admin','$2a$10$B7glwKe20USo1GkMLNSUUe14FUbyLleY2tt7ugx4AEpAPJpkDTUeK','System','Administrator','stephenjw@fastmail.com',1);
+
+DROP TABLE IF EXISTS Authorities;
+CREATE TABLE Authorities (
+  USERNAME varchar(50) NOT NULL,
+  AUTHORITY varchar(50) NOT NULL,
+  UNIQUE KEY ix_auth_username (username,authority),
+  CONSTRAINT authorities_ibfk_1 FOREIGN KEY (username) REFERENCES users (username)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO Authorities VALUES ('admin','USER');

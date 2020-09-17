@@ -1,0 +1,44 @@
+<th:block th:fragment="templateForm(budget)">
+	<input type="hidden" name="budgetId" th:if="${budget != null}" th:value="${budget.id}">
+	<div class="row no-gutters">
+		<div class="col-md-6">
+			<input th:value="${budget == null? '': budget.name}" type=text class="form-control required" name="budgetName" placeholder="Template name..." title="Enter a template name">
+		</div>
+	</div>
+	<div class="row no-gutters mt-3">
+		<div class="col text-center">
+			<table class="template-table table table-striped table-bordered">
+				<thead>
+					<tr class="table-info">
+						<th class="pl-3">Budget Items</th>
+						<th width="25%" class="text-center pr-3">Amount</th>
+					</tr>
+				</thead>
+				<tbody th:if="${budget == null}">
+					<th:block th:replace="partial/budget-row :: budgetRow(null)"></th:block>
+				</tbody>
+				<tbody th:if="${budget != null}">
+					<th:block th:each="item: ${budget.items}">
+						<div th:replace="partial/budget-row :: budgetRow(${item})"></div>
+					</th:block>
+					<th:block th:replace="partial/budget-row :: budgetRow(null)"></th:block>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<script>
+		$(document).ready(function(){
+			$('.template-form .item-name, .template-form .item-amount').filter(function(){
+				return !!this.value;
+			}).addClass('required');
+			$('.template-form .item-name, .template-form .item-amount').filter(function(){
+				return !!this.value;
+			}).closest('tr').find('.remove-row-container').show();
+			$('.template-form .item-name').first().addClass('required');
+			$('.template-form .item-amount').first().addClass('required');
+			$(document).ready(function(){
+				sortTemplate();
+			})
+		})
+	</script>
+</th:block>

@@ -1,0 +1,243 @@
+.logo {
+	width:50px;
+}
+.navbar-header {
+	color:white;
+	font-size:2rem;
+}
+.user-btn {
+	font-size: 1rem !important;
+	color: #fff !important;
+	position: absolute;
+	right: 2;
+	top: 2;
+}
+.alert-container{
+	z-index: 2147483645;
+	position: fixed;
+	top: 10px;
+	left: 0;
+	right: 0;
+	margin-left: auto;
+	margin-right: auto;
+	width: 600px;
+}
+.alert-close {
+	position:absolute;
+	top: 0;
+	right:3px;
+	padding-right:2px;
+}
+#custom-alert > span {
+	word-wrap: break-word;
+	max-width:95%;
+}
+.fade-alert {
+    -webkit-transition-duration: 2s; /* Safari */
+    transition-duration: 2s;
+}
+.btn.create-budget {
+	position:absolute;
+	right: 5;
+	bottom: 5;
+}
+select#newBudgetMonth {
+	max-width: 150px !important;
+}
+#createBudgetModal .modal-title {
+	font-size: 1.25rem;
+}
+.fw-600 {
+	font-weight:600 !important;
+}
+div.remove-row {
+	border-radius:100%;
+	color:white;
+	font-weight:600;
+	font-size:1.15rem;
+	line-height:.5;
+	height:15px !important;
+	width:15px !important;
+	opacity:.9;
+    transition: 1s ease;
+}
+div.remove-row:hover {
+	cursor:pointer;
+	opacity:1;
+}
+div.remove-row.active {
+	border-radius:0 !important;
+	width:100% !important;
+	height:100% !important;
+	min-width:100% !important;
+	min-height:100% !important;
+}
+.invalid-form-input {
+	border: 1px solid !important;
+	border-color: red !important;
+}
+.budget-container {
+	position: relative;
+	padding: 10px 10px 10px 10px;
+	width:150px;
+	height:150px;
+	box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+	-webkit-transition: all .3s ease;
+	-moz-transition: all .3s ease;
+	-o-transition: all .3s ease;
+	-ms-transition: all .3s ease;
+	transition: all .3s ease;
+}
+.budget-container.focused {
+	border: 1px solid #008cba;
+	box-shadow: none;
+}
+.budget-container:hover {
+	background-color: #ededed;
+	cursor:pointer;
+	box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.3);
+}
+.budget-container.new-template {
+	opacity:.55;
+}
+.budget-container.new-template:hover {
+	opacity:1;
+}
+.edit-budget-icon {
+	position: absolute;
+	right: 0;
+	bottom:5;
+}
+.edit-budget-icon:hover {
+	cursor:pointer;
+}
+.edit-budget-icon:hover > img {
+	opacity: .85;
+}
+.edit-budget-icon > img {
+	opacity: .5;
+	width:30px;
+}
+.delete-budget-icon {
+	position: absolute;
+	right:0 !important;
+	top:5;
+}
+.delete-budget-icon:hover {
+	cursor:pointer;
+}
+.delete-budget-icon:hover > img {
+	opacity: .85;
+}
+.delete-budget-icon > img {
+	opacity: .5;
+	width:30px;
+}
+.col.create-from-template, .col.budget-picker {
+	overflow-x: scroll;
+}
+::-webkit-scrollbar {
+    height: 10px;
+}
+ 
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 10px;
+}
+ 
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+::-webkit-scrollbar:vertical {
+  display: none;
+}
+.body-container {
+/* 	min-height: calc(100vh - 102px) !important; */
+	max-width:800px;
+	width: 100%;
+}
+.budgets-selector {
+	padding-left: 5rem;
+	padding-right: 5rem;
+}
+.navbar-header, .user-btn {
+	text-decoration: none !important;
+}
+.focused-budget-table .item-label-cell {
+	width:80%;
+}
+.dynamic-input {
+	max-width:80%;
+}
+.icon.insert-row {
+	font-size:1.75rem;
+	width:20px;
+	height: 20px;
+	border-radius: 100%;
+	margin-top: -10px;
+	line-height: .1;
+	padding-left: 1.5px !important;
+}
+.icon.insert-row:hover, .action-icon:hover {
+	opacity: 1;
+	cursor:pointer;
+}
+.saved-indicator {
+	bottom:0;
+	right:0;
+	opacity:.75;
+}
+.saved-indicator>span {
+	color:green;
+	font-size:1.25rem;
+}
+.saved-indicator.saving {
+	opacity:.45
+}
+.action-icon {
+	bottom:0;
+	left:5;
+	opacity:.75;
+}
+.action-icon>img {
+	width: 30px;
+}
+.bg-table-custom {
+	background-color:#808d91 !important;
+}
+@media screen and (max-width:991px){
+	.modal-dialog.modal-xl {
+		width:95%;
+		margin-left: auto !important;
+		margin-right: auto !important;
+		max-width:none !important;
+	}
+	.body-container, .budgets-selector {
+		padding-left: 1rem !important;
+		padding-right: 1rem !important;
+	}
+}
+@media screen and (max-width:500px){
+	.body-container, .budgets-selector {
+		padding-left: .3rem !important;
+		padding-right: .3rem !important;
+	}
+	.bill-calculator div, .bill-calculator span {
+		font-size : .75rem !important;
+	}
+	.navbar-header, h2 {
+		font-size: 1.5rem;
+	}
+	.navbar-header {
+		max-width: 200px;
+		width: 200px;
+		display:inline-block;
+	}
+	.btn.create-budget, .user-btn {
+		font-size: .75rem;
+	}
+	.focused-budget-table .item-label-cell {
+		width:70%;
+	}
+}

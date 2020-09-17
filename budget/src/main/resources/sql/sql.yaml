@@ -1,0 +1,53 @@
+saveUser: >
+  INSERT INTO Users VALUES (?,?,?,?,?,1)
+
+deleteUser: >
+  DELETE FROM Users WHERE USERNAME = ?
+
+saveUserAuthorities: >
+  INSERT INTO Authorities VALUES (?,?)
+
+getUserByUsername: >
+  SELECT * FROM Users WHERE USERNAME = :username OR EMAIL = :username
+
+getAuthoritiesByUsername: >
+  SELECT * FROM Authorities WHERE USERNAME = ?
+
+insertBudgetItems: >
+  INSERT INTO Item (BUDGET_ID,NAME, AMOUNT) values (?,?,?)
+
+createNewTemplate: >
+  INSERT INTO BudgetMaster (NAME,LAST_USED,IS_TEMPLATE) values (?,CURRENT_TIMESTAMP,1)
+
+getLatestTemplate: >
+  SELECT * FROM BudgetMaster WHERE IS_TEMPLATE = 1 and DISABLED = 0 ORDER BY ID desc LIMIT 1
+
+getAllTemplates: >
+  SELECT * FROM BudgetMaster WHERE IS_TEMPLATE = 1 and DISABLED = 0 ORDER BY LAST_USED DESC
+
+getAllBudgets: >
+  SELECT * FROM BudgetMaster WHERE IS_TEMPLATE = 0 and DISABLED = 0 ORDER BY ID DESC
+
+getBudgetById: >
+  SELECT * FROM BudgetMaster WHERE ID = ?
+
+getItemsForBudgetById: >
+  SELECT * FROM Item WHERE BUDGET_ID = ? order by ID asc
+
+disableBudgetById: >
+  UPDATE BudgetMaster set DISABLED = 1 where ID = ?
+
+deleteBudgetItemsByBudgetId: >
+  DELETE FROM Item where BUDGET_ID = ?
+
+updateBudget: >
+  UPDATE BudgetMaster set NAME = ?, LAST_USED = CURRENT_TIMESTAMP where ID = ?
+
+createEmptyBudget: >
+  INSERT INTO BudgetMaster (NAME,LAST_USED) values (?,CURRENT_TIMESTAMP)
+
+getLatestBudget: >
+  SELECT * FROM BudgetMaster WHERE IS_TEMPLATE = 0 and DISABLED = 0 ORDER BY ID desc LIMIT 1
+
+cloanBudgetItems: >
+  INSERT INTO Item (BUDGET_ID,NAME,AMOUNT) select ?,NAME,AMOUNT from Item where BUDGET_ID = ?
