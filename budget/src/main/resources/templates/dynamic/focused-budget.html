@@ -26,6 +26,12 @@
 								<div class="text-center d-inline-block pr-3">
 									<div class="remove-row bg-danger ml-1">-</div>
 								</div>
+								<div class="sort-grip d-inline-block pr-3" data-toggle="tooltip" data-placement="bottom" title="Click and drag to sort">
+									<svg height="26" width="16">
+									  <polygon points="8,11 12,15 4,15" style="fill:#7B8A8B;stroke:#7B8A8B;stroke-width:1" />
+									  <polygon points="8,23 12,19 4,19" style="fill:#7B8A8B;stroke:#7B8A8B;stroke-width:1" />
+									</svg>
+								</div>
 								<div class="editable-item item-name d-inline-block" th:text="${item.name}">
 								</div>
 							</td>
@@ -60,7 +66,7 @@
 		<div class="row no-gutters">
 			<div class="col text-center">
 				<div class="position-absolute w-100">
-					<div class="btn btn-success insert-row icon">+</div>
+					<img class="insert-row icon" th:src="@{/images/plus-circle-green.png}">
 <!-- 					<img class="insert-row icon" th:src="@{/images/insert_row.png}"> -->
 				</div>
 			</div>

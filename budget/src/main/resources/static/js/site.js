@@ -145,7 +145,7 @@ function loadBudget(id){
 function sortTable(tableSelector){
 	$(tableSelector).sortable({
 		items: 'tr',
-		handle: 'td',
+		handle: '.sort-grip',
 		cursor: 'grabbing',
 		axis: 'y',
 		delay: 100,

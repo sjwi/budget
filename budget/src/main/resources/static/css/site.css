@@ -60,6 +60,7 @@ div.remove-row {
 	width:15px !important;
 	opacity:.9;
     transition: 1s ease;
+    padding-left:1px;
 }
 div.remove-row:hover {
 	cursor:pointer;
@@ -171,13 +172,9 @@ div.remove-row.active {
 	max-width:80%;
 }
 .icon.insert-row {
-	font-size:1.75rem;
 	width:20px;
 	height: 20px;
-	border-radius: 100%;
 	margin-top: -10px;
-	line-height: .1;
-	padding-left: 1.5px !important;
 }
 .icon.insert-row:hover, .action-icon:hover {
 	opacity: 1;
@@ -205,6 +202,13 @@ div.remove-row.active {
 }
 .bg-table-custom {
 	background-color:#808d91 !important;
+}
+.sort-grip>svg {
+	margin-top: -8px;	
+}
+.sort-grip:hover {
+	cursor:move;
+	cursor:grab;
 }
 @media screen and (max-width:991px){
 	.modal-dialog.modal-xl {
