@@ -13,20 +13,20 @@
 		</div>
 		<div class="row no-gutters text-center mt-2">
 			<div class="col">
-				<table class="focused-budget-table table table-striped table-hover  mb-0">
+				<table class="focused-budget-table table table-striped table-hover  mb-0" id="focusedBudgetTable">
 					<thead class="table-info bg-table-custom">
 						<tr>
-							<th >Budget Item</th>
-							<th class="text-right">Amount</th>
+							<th><a href="javascript:SortTable(0,'T')" class="text-white budget-h">Budget Item</a></th>
+							<th class="text-right"><a href="javascript:SortTable(1,'N')" class="text-white">Amount</a></th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr th:each="item: ${budget.items}">
 							<td class="item-label-cell">
-								<div class="text-center d-inline-block pr-3">
+								<div class="text-center d-inline-block pr-1">
 									<div class="remove-row bg-danger ml-1">-</div>
 								</div>
-								<div class="sort-grip d-inline-block pr-3" data-toggle="tooltip" data-placement="bottom" title="Click and drag to sort">
+								<div class="sort-grip d-inline-block pr-1" data-toggle="tooltip" data-placement="bottom" title="Click and drag to sort">
 									<svg height="26" width="16">
 									  <polygon points="8,11 12,15 4,15" style="fill:#7B8A8B;stroke:#7B8A8B;stroke-width:1" />
 									  <polygon points="8,23 12,19 4,19" style="fill:#7B8A8B;stroke:#7B8A8B;stroke-width:1" />
@@ -37,7 +37,7 @@
 							</td>
 							<td>
 								<div class="text-right">
-									$<span class="editable-item item-amount currency" th:text="${#numbers.formatDecimal(item.amount, 1, 'DEFAULT', 2, 'DEFAULT')}"></span>
+									$<span class="editable-item item-amount currency d-inline-block" th:text="${#numbers.formatDecimal(item.amount, 1, 'DEFAULT', 2, 'DEFAULT')}"></span>
 								</div>
 							</td>
 						</tr>
@@ -46,14 +46,20 @@
 								<div class="text-center d-inline-block pr-3">
 									<div class="remove-row bg-danger ml-1">-</div>
 								</div>
+								<div class="sort-grip d-inline-block pr-3" data-toggle="tooltip" data-placement="bottom" title="Click and drag to sort">
+									<svg height="26" width="16">
+									  <polygon points="8,11 12,15 4,15" style="fill:#7B8A8B;stroke:#7B8A8B;stroke-width:1" />
+									  <polygon points="8,23 12,19 4,19" style="fill:#7B8A8B;stroke:#7B8A8B;stroke-width:1" />
+									</svg>
+								</div>
 								<div class="item-name d-inline-block">
-									<input class="dynamic-input new-row">
+									<input class="dynamic-input new-row form-control">
 								</div>
 							</td>
 							<td>
 								<div class="text-right">
-									$<span class="item-amount currency">
-										<input class="dynamic-input new-row">
+									$<span class="item-amount currency d-inline-block">
+										<input class="dynamic-input new-row form-control">
 									</span>
 								</div>
 							</td>

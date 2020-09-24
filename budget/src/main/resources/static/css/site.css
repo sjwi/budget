@@ -60,7 +60,7 @@ div.remove-row {
 	width:15px !important;
 	opacity:.9;
     transition: 1s ease;
-    padding-left:1px;
+    padding-left:0px;
 }
 div.remove-row:hover {
 	cursor:pointer;
@@ -210,6 +210,15 @@ div.remove-row.active {
 	cursor:move;
 	cursor:grab;
 }
+.modal {
+  overflow-y:auto;
+}
+.focused-budget-table .currency .form-control{
+	max-width:60px;
+}
+th > a.budget-h {
+/* 	padding-left:35px; */
+}
 @media screen and (max-width:991px){
 	.modal-dialog.modal-xl {
 		width:95%;
@@ -226,6 +235,9 @@ div.remove-row.active {
 	.body-container, .budgets-selector {
 		padding-left: .3rem !important;
 		padding-right: .3rem !important;
+	}
+	.focused-budget-table .form-control{
+		max-width:60px;
 	}
 	.bill-calculator div, .bill-calculator span {
 		font-size : .75rem !important;
