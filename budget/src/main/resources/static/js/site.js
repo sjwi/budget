@@ -145,7 +145,7 @@ function loadBudget(id){
 function sortTable(tableSelector){
 	$(tableSelector).sortable({
 		items: 'tr',
-		handle: 'td',
+		handle: '.sort-grip',
 		cursor: 'grabbing',
 		axis: 'y',
 		delay: 100,
@@ -326,13 +326,16 @@ $(document).ready(function(){
 	});
 	$(document).on('click','.editable-item',function(){
 		var item = $(this).text().replace("_______","");
+		if (parseInt(item)){
+			item = parseInt(item);
+		}
 		var parent = $(this);
 		$(this).html('');
 		$('<input></input>')
 			.attr({
 				'type': 'text',
 				'id': 'dynamicInput',
-				'class': 'dynamic-input'
+				'class': 'dynamic-input form-control'
 			})
 			.appendTo(parent);
 		$('#dynamicInput').focus().val(item);

@@ -60,6 +60,7 @@ div.remove-row {
 	width:15px !important;
 	opacity:.9;
     transition: 1s ease;
+    padding-left:0px;
 }
 div.remove-row:hover {
 	cursor:pointer;
@@ -171,13 +172,9 @@ div.remove-row.active {
 	max-width:80%;
 }
 .icon.insert-row {
-	font-size:1.75rem;
 	width:20px;
 	height: 20px;
-	border-radius: 100%;
 	margin-top: -10px;
-	line-height: .1;
-	padding-left: 1.5px !important;
 }
 .icon.insert-row:hover, .action-icon:hover {
 	opacity: 1;
@@ -206,6 +203,22 @@ div.remove-row.active {
 .bg-table-custom {
 	background-color:#808d91 !important;
 }
+.sort-grip>svg {
+	margin-top: -8px;	
+}
+.sort-grip:hover {
+	cursor:move;
+	cursor:grab;
+}
+.modal {
+  overflow-y:auto;
+}
+.focused-budget-table .currency .form-control{
+	max-width:60px;
+}
+th > a.budget-h {
+/* 	padding-left:35px; */
+}
 @media screen and (max-width:991px){
 	.modal-dialog.modal-xl {
 		width:95%;
@@ -222,6 +235,9 @@ div.remove-row.active {
 	.body-container, .budgets-selector {
 		padding-left: .3rem !important;
 		padding-right: .3rem !important;
+	}
+	.focused-budget-table .form-control{
+		max-width:60px;
 	}
 	.bill-calculator div, .bill-calculator span {
 		font-size : .75rem !important;
