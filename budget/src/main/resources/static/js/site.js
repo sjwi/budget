@@ -129,6 +129,9 @@ function deleteBudget(id){
 		type: 'POST',
 		success: function(response){
 			$('#budgetPicker_' + id).closest('.budget-template-wrapper, .budget-wrapper').hide();
+			if (!$('#budgetPicker_' + id).closest('.budget-template-wrapper').length){
+				location.reload();
+			}
 		},
 		error: function(){
 			alertWithFade('danger','Unable to delete template, try refreshing the page');
