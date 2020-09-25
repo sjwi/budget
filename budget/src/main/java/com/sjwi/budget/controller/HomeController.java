@@ -13,6 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -42,6 +43,9 @@ public class HomeController {
 	@Autowired
 	BudgetService budgetService;
 	
+	@Autowired
+	ServletContext servletContext;
+	
 	@RequestMapping("/")
 	public ModelAndView home() {
 		ModelAndView mv = new ModelAndView("home");
@@ -51,7 +55,7 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/create/template", method = RequestMethod.POST)
-	public void createTemplate(HttpServletResponse response, @RequestParam("item_name") List<String> items, @RequestParam("item_amount") List<Double> amounts, @RequestParam("budgetName") String templateName) throws IOException {
+	public void createTemplate(HttpServletResponse response, HttpServletRequest request, @RequestParam("item_name") List<String> items, @RequestParam("item_amount") List<Double> amounts, @RequestParam("budgetName") String templateName) throws IOException {
 		Budget templateBudget = new Budget(0,templateName, 
 				IntStream.range(0, items.size()).boxed()
 						.map(i -> new Item(0,items.get(i),amounts.get(i)))
@@ -59,17 +63,18 @@ public class HomeController {
 						.collect(Collectors.toList())
 				);
 		budgetService.createTemplate(templateBudget);
-		response.sendRedirect("/#create-budget");
+		response.sendRedirect(request.getContextPath() + "/#create-budget");
 	}
 	
 	@RequestMapping(value = "/create/budget", method = RequestMethod.POST)
-	public void createBudget(HttpServletResponse response, @RequestParam("template") Optional<Integer> template, @RequestParam(value="month", required=true) int month) throws IOException {
+	public void createBudget(HttpServletResponse response, HttpServletRequest request, @RequestParam("template") Optional<Integer> template, @RequestParam(value="month", required=true) int month) throws IOException {
 		budgetService.createBudget(template,month);
-		response.sendRedirect("/");
+		response.sendRedirect(request.getContextPath() + "/");
 	}
 
 	@RequestMapping(value = "/budget/edit", method = {RequestMethod.GET,RequestMethod.POST})
 	public void editTemplate(HttpServletResponse response, 
+			HttpServletRequest request,
 			@RequestParam("item_name[]") List<String> items, 
 			@RequestParam(value="budgetId", required=true) int budgetId, 
 			@RequestParam("item_amount[]") List<Double> amounts, 
@@ -83,7 +88,7 @@ public class HomeController {
 				);
 		budgetService.editBudget(templateBudget);
 		if (redirect != null && !redirect.isEmpty()) {
-			response.sendRedirect(redirect);
+			response.sendRedirect(request.getContextPath() + "/");
 		}
 	}
 
