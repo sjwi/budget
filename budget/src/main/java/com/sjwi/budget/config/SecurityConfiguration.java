@@ -32,8 +32,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity)
       throws Exception {
         httpSecurity.authorizeRequests()
-        	.antMatchers( "/favicon.ico").permitAll()
-        	.antMatchers( "/images/favicon.png").permitAll()
+        	.antMatchers("/favicon.ico").permitAll()
+        	.antMatchers("/images/favicon.png").permitAll()
         	.antMatchers("/login").permitAll()
         	.antMatchers("/**").access("hasAuthority('USER')")
         	.and()
