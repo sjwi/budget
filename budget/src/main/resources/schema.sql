@@ -68,7 +68,7 @@ CREATE TABLE Users (
   PRIMARY KEY (username)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO Users VALUES ('admin','$2a$10$B7glwKe20USo1GkMLNSUUe14FUbyLleY2tt7ugx4AEpAPJpkDTUeK','System','Administrator','sysadmin@stephenky.com',1);
+INSERT INTO Users VALUES ('demo_user','$2a$10$B7glwKe20USo1GkMLNSUUe14FUbyLleY2tt7ugx4AEpAPJpkDTUeK','Demo','User','demo_user@stephenky.com',1);
 
 DROP TABLE IF EXISTS Authorities;
 CREATE TABLE Authorities (
@@ -78,4 +78,4 @@ CREATE TABLE Authorities (
   CONSTRAINT authorities_ibfk_1 FOREIGN KEY (username) REFERENCES Users (username)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO Authorities VALUES ('admin','USER');
+INSERT INTO Authorities VALUES ('demo_user','USER');
