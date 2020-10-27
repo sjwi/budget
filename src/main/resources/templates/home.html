@@ -1,0 +1,28 @@
+<html>
+	<body>
+		<th:block th:replace="partial/head"></th:block>
+		<th:block th:replace="partial/nav"></th:block>
+			<div class="row no-gutters">
+				<div class="col text-center">
+					<div class="bg-white d-inline-block body-container">
+						<form id="focusedBudgetForm" method="post" th:action="@{/budget/edit}">
+							<th:block th:replace="dynamic/focused-budget :: focusedBudget(${budgets == null || #lists.isEmpty(budgets)? null: budgets.get(0)})"></th:block>
+						</form>
+					</div>
+					<div class="budgets-selector">
+						<th:block th:replace="partial/budget-picker"></th:block>
+					</div>
+				</div>
+			</div>
+		<th:block th:replace="modal/new-budget"></th:block>
+		<th:block th:replace="modal/email-budget"></th:block>
+		<th:block th:replace="modal/new-template"></th:block>
+		<th:block th:replace="modal/edit-template"></th:block>
+		<th:block th:replace="partial/alerts"></th:block>
+		<div class="collapse partial-container">
+			<table><tbody>
+				<th:block th:replace="partial/budget-row :: budgetRow(null)"></th:block>
+			</tbody></table>
+		</div>
+	</body>
+</html>
