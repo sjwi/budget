@@ -18,7 +18,7 @@ public class LandingPageAspect {
 	UserService userService;
 	@Before("(execution(* com.sjwi.budget.controller.*.*(..)))")
 	public void initializeUser() {
-		BudgetUser user = (BudgetUser) userService.loadUserByUsername("admin");
+		BudgetUser user = (BudgetUser) userService.loadUserByUsername("demo_user");
 		SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities()));
 	}
 }
