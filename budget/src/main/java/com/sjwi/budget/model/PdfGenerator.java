@@ -1,4 +1,4 @@
-package com.sjwi.budget.service;
+package com.sjwi.budget.model;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -23,8 +24,6 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.sjwi.budget.model.Budget;
-import com.sjwi.budget.model.Item;
 
 
 public class PdfGenerator {
@@ -72,7 +71,8 @@ public class PdfGenerator {
 
 	private Element buildBillCalculator() {
 		PdfPTable table = new PdfPTable(6);
-		budget.getBillMap().forEach((k,v) -> {
+		BillCalculator billCalculator = new BillCalculator(budget.getItems().stream().map(i ->  i.getAmount().intValue()).collect(Collectors.toList()));
+		billCalculator.getBillMapForItems().forEach((k,v) -> {
 			table.addCell(buildCellFromText("$"+k+" x " + v,Element.ALIGN_CENTER));
 		});
 		return table;
