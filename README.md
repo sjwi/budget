@@ -2,7 +2,7 @@
 A simple budgeting application to help me keep calculate withdraws for my cash envelopes.  
 [Spring Boot Web Application]
 
-See demo at http://stephenky.com/budget-demo
+See demo at https://stephenky.com/budget-demo
 
 # Configuration
 To quickly standup application on a tomcat server, simply edit the application.properties with the following values or set environment variables with these values.  
