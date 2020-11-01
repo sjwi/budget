@@ -17,14 +17,14 @@ public class BillCalculator {
   public Map<Integer,Integer> getBillMapForItems(){
     Map<Integer, Integer> billMap = Arrays.stream(new Integer[] {100,50,20,10,5,1})
 										  .collect(LinkedHashMap::new,(map, denomination) -> map.put(denomination, 0),Map::putAll);
-    for (Integer itemAmount: itemAmounts) {
+    itemAmounts.forEach(itemAmt -> {
 	  Iterator<Map.Entry<Integer, Integer>> itr = billMap.entrySet().iterator(); 
-      while (itemAmount > 0) {
+      while (itemAmt > 0) {
 	    Map.Entry<Integer, Integer> billEntry = itr.next();
-	    billMap.put(billEntry.getKey(), billEntry.getValue() + itemAmount / billEntry.getKey());
-	    itemAmount = itemAmount % billEntry.getKey();
+	    billMap.put(billEntry.getKey(), billEntry.getValue() + itemAmt / billEntry.getKey());
+	    itemAmt = itemAmt % billEntry.getKey();
 	  }
-    }	
+    });
     return billMap;
   }
 }
