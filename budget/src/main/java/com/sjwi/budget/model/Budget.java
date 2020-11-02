@@ -29,12 +29,11 @@ public class Budget {
 
 	/**
 	 * @param items - A list of budget items
-	 * @return A map representing the total number of bills 
-	 * required for each denomination so the cash
-	 * withdrawal can be separated out into each 
-	 * budget item's envelope. 
+	 * @return A map representing the total number of 
+	 * bills required for each denomination so the cash
+	 * withdrawal can be separated out into each item's envelope. 
 	 */
-    public Map<Integer,Integer> getDenominationMapForItems(){
+    public Map<Integer,Integer> getDenominationMapForItems(List<Item> items){
     	Map<Integer, Integer> billMap = Arrays.stream(new Integer[] {100,50,20,10,5,1})
     										.collect(LinkedHashMap::new,(map, denomination) -> map.put(denomination, 0),Map::putAll);
     	items.stream().map(i -> i.getAmount().intValue()).forEach(itemAmt -> {
