@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,9 +31,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.sjwi.budget.mail.Mailer;
 import com.sjwi.budget.model.Budget;
 import com.sjwi.budget.model.Item;
+import com.sjwi.budget.model.PdfGenerator;
 import com.sjwi.budget.model.mail.EmailWithAttachment;
 import com.sjwi.budget.service.BudgetService;
-import com.sjwi.budget.service.PdfGenerator;
 
 @Controller
 public class HomeController {
@@ -53,7 +54,26 @@ public class HomeController {
 		mv.addObject("budgets", budgetService.getAllBudgets());
 		return mv;
 	}
+
+	@RequestMapping(value="/login", method=RequestMethod.GET)
+	public ModelAndView login() {
+		return new ModelAndView("login");
+	}
 	
+	@RequestMapping(value="/login", method=RequestMethod.POST)
+	public void attemptLogin(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam (name = "username", required = true) String username,
+			@RequestParam (name = "password", required = true) String password
+			) throws IOException {
+		System.out.println("HI");
+		try {
+			request.login(username, password);
+			response.sendRedirect(request.getContextPath() + "/");
+		} catch (ServletException e) {
+			response.sendRedirect(request.getContextPath() + "/login?bad_sign_in=true");
+		}
+	}
+
 	@RequestMapping(value = "/create/template", method = RequestMethod.POST)
 	public void createTemplate(HttpServletResponse response, HttpServletRequest request, @RequestParam("item_name") List<String> items, @RequestParam("item_amount") List<Double> amounts, @RequestParam("budgetName") String templateName) throws IOException {
 		Budget templateBudget = new Budget(0,templateName, 

@@ -1,0 +1,47 @@
+<html>
+	<th:block th:replace="partial/head"></th:block>
+	<body>
+		<div class="row no-gutters">
+			<div class="col">
+				<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+					<div class="w-100 text-center mx-auto">
+						<a th:href="@{/}"><img class="logo d-flex mx-auto" th:src="@{/images/favicon.png}"></a>
+						<a th:href="@{/}" class="navbar-header text-white">Monthly Cash Budgets</a>
+					</div>
+				</nav>
+			</div>
+		</div>
+		<div class="row no-gutters login-row text-center">
+			<div class="col text-center">
+				<div class="login-container bg-white mt-5">
+					<h1 class="mt-5">Sign in to use this application</h1>
+					<div th:if="${param.error}" class="row no-gutters">
+						<div class="col">
+							<h5 class="text-danger">Invalid username or password</h5>
+						</div>
+					</div>
+					<div class="row no-gutters">
+						<div class="col-2"></div>
+						<div class="col-md-8">
+							<form th:action="@{/login}" method="POST">
+								<div class="form-row mt-3">
+									<label class="col-form-label col-3">Username:</label>
+									<input id="username" name="username" class="col form-control" type="text">
+								</div>
+								<div class="form-row mt-3 mb-3">
+									<label class="col-form-label col-3">Password:</label>
+									<input id="password" name="password" class="col form-control" type="password">
+								</div>
+								<div class="row mb-5 no-gutters">
+									<div class="col text-right">
+										<button type="submit" class="btn btn-primary btn-large">Login</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
