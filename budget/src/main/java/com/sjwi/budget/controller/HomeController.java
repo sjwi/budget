@@ -31,9 +31,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.sjwi.budget.mail.Mailer;
 import com.sjwi.budget.model.Budget;
 import com.sjwi.budget.model.Item;
+import com.sjwi.budget.model.PdfGenerator;
 import com.sjwi.budget.model.mail.EmailWithAttachment;
 import com.sjwi.budget.service.BudgetService;
-import com.sjwi.budget.service.PdfGenerator;
 
 @Controller
 public class HomeController {

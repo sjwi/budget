@@ -1,6 +1,7 @@
 package com.sjwi.budget.model;
 
-import java.util.HashMap;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,37 +26,24 @@ public class Budget {
 	public List<Item> getItems() {
 		return items;
 	}
-	public Map<Integer,Integer> getBillMap(){
-		Map<Integer, Integer> billMap = initializeBillMap();
-		for (Item item: items) {
-			Double itemAmount = item.getAmount();
-			for (Map.Entry<Integer, Integer> kv: billMap.entrySet()) {
-				Map<Integer, Double> data = numberOfBillsInAmount(kv.getKey(),itemAmount);
-				billMap.put(kv.getKey(),kv.getValue() + data.entrySet().iterator().next().getKey());
-				itemAmount = data.entrySet().iterator().next().getValue();
+
+	/**
+	 * @param items - A list of budget items
+	 * @return A map representing the total number of 
+	 * bills required for each denomination so the cash
+	 * withdrawal can be separated out into each item's envelope. 
+	 */
+    public Map<Integer,Integer> getDenominationMapForItems(){
+    	Map<Integer, Integer> billMap = Arrays.stream(new Integer[] {100,50,20,10,5,1})
+    										.collect(LinkedHashMap::new,(map, denomination) -> map.put(denomination, 0),Map::putAll);
+    	items.stream().map(i -> i.getAmount().intValue()).forEach(itemAmt -> {
+			Iterator<Map.Entry<Integer, Integer>> itr = billMap.entrySet().iterator(); 
+			while (itemAmt > 0) {
+				Map.Entry<Integer, Integer> billEntry = itr.next();
+				billMap.put(billEntry.getKey(), billEntry.getValue() + itemAmt / billEntry.getKey());
+				itemAmt = itemAmt % billEntry.getKey();
 			}
-		}	
+		});
 		return billMap;
-	}
-	
-	private Map<Integer,Integer> initializeBillMap(){
-		Map<Integer,Integer> billMap = new LinkedHashMap<>();
-		billMap.put(100, 0);
-		billMap.put(50, 0);
-		billMap.put(20, 0);
-		billMap.put(10, 0);
-		billMap.put(5, 0);
-		billMap.put(1, 0);
-		return billMap;
-	}
-	private Map<Integer,Double> numberOfBillsInAmount(Integer bill, Double amount){
-		Integer billCounter = 0;
-		while(amount >= bill){
-			billCounter++;
-			amount = amount - bill;
-		}
-		Map<Integer,Double> newAmountWithBillCount = new HashMap<>();
-		newAmountWithBillCount.put(billCounter, amount);
-		return newAmountWithBillCount;
 	}
 }

@@ -1,4 +1,4 @@
-package com.sjwi.budget.service;
+package com.sjwi.budget.model;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -23,8 +23,6 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.sjwi.budget.model.Budget;
-import com.sjwi.budget.model.Item;
 
 
 public class PdfGenerator {
@@ -72,7 +70,7 @@ public class PdfGenerator {
 
 	private Element buildBillCalculator() {
 		PdfPTable table = new PdfPTable(6);
-		budget.getBillMap().forEach((k,v) -> {
+		budget.getDenominationMapForItems().forEach((k,v) -> {
 			table.addCell(buildCellFromText("$"+k+" x " + v,Element.ALIGN_CENTER));
 		});
 		return table;

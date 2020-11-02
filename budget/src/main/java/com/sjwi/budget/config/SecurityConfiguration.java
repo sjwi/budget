@@ -40,7 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         	.antMatchers("/images/**").permitAll()
         	.antMatchers("/**").access("hasAuthority('USER')")
         	.and().formLogin().loginPage("/login")
-            .and().requestCache().requestCache(requestCache())
+          .and().requestCache().requestCache(requestCache())
         	.and().logout()
         	.logoutSuccessUrl("/login")
         	.and().headers()
