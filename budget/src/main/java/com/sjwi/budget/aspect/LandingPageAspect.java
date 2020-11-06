@@ -1,5 +1,7 @@
 package com.sjwi.budget.aspect;
 
+import java.io.IOException;
+
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +18,9 @@ public class LandingPageAspect {
 	
 	@Autowired
 	UserService userService;
+
 	@Before("(execution(* com.sjwi.budget.controller.*.*(..)))")
-	public void initializeUser() {
+	public void initializeUser() throws IOException {
 		BudgetUser user = (BudgetUser) userService.loadUserByUsername("demo_user");
 		SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities()));
 	}

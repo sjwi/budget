@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -61,8 +62,8 @@ public class HomeController {
 	}
 
 	@RequestMapping(value="/login", method=RequestMethod.GET)
-	public ModelAndView login(Authentication auth) {
-		System.out.println(auth);
+	public ModelAndView login() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (null != auth && !("anonymousUser").equals(auth.getName())) {
 			return new ModelAndView("redirect:/");
 		}
