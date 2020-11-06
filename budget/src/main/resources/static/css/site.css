@@ -214,7 +214,8 @@ div.remove-row.active {
   overflow-y:auto;
 }
 .focused-budget-table .currency .form-control{
-	max-width:60px;
+	max-width:50px;
+	font-size:.9rem;
 }
 .login-row {
 	height: calc(100vh - 114px);
