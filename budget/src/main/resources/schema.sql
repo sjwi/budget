@@ -69,7 +69,7 @@ CREATE TABLE Users (
   PRIMARY KEY (username)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO Users VALUES ('demo_user','$2a$10$B7glwKe20USo1GkMLNSUUe14FUbyLleY2tt7ugx4AEpAPJpkDTUeK','Demo','User','demo_user@stephenky.com','999999999',1);
+INSERT INTO Users VALUES ('demo_user','$2a$10$KnRdXb09WIgf1gYwYAj/pO7mB7Rp0i0xejpncp2ZZnlqZW9sj4h/m','Demo','User','demo_user@stephenky.com','999999999',1);
 
 DROP TABLE IF EXISTS Authorities;
 CREATE TABLE Authorities (

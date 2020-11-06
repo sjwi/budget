@@ -14,13 +14,13 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,6 +49,9 @@ public class HomeController {
 	@Autowired
 	ServletContext servletContext;
 	
+	@Autowired
+	PasswordEncoder passwordEncoder;
+
 	@RequestMapping("/")
 	public ModelAndView home() {
 		ModelAndView mv = new ModelAndView("home");
@@ -62,20 +65,6 @@ public class HomeController {
 		return new ModelAndView("login");
 	}
 	
-	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public void attemptLogin(HttpServletRequest request, HttpServletResponse response,
-			@RequestParam (name = "username", required = true) String username,
-			@RequestParam (name = "password", required = true) String password
-			) throws IOException {
-		System.out.println("HI");
-		try {
-			request.login(username, password);
-			response.sendRedirect(request.getContextPath() + "/");
-		} catch (ServletException e) {
-			response.sendRedirect(request.getContextPath() + "/login?bad_sign_in=true");
-		}
-	}
-
 	@RequestMapping(value = "/create/template", method = RequestMethod.POST)
 	public void createTemplate(HttpServletResponse response, HttpServletRequest request, @RequestParam("item_name") List<String> items, @RequestParam("item_amount") List<Double> amounts, @RequestParam("budgetName") String templateName) throws IOException {
 		Budget templateBudget = new Budget(0,templateName, 

@@ -29,7 +29,7 @@ public class UserService implements UserDetailsService {
 	    authorityNames.stream().forEach(a -> {
 			authorities.add(new SimpleGrantedAuthority(a.toUpperCase()));
 	    });
-	    BudgetUser user = new BudgetUser(username.trim().toLowerCase(), firstName, lastName, email, password, account, authorities);
+	    BudgetUser user = new BudgetUser(username.trim().toLowerCase(), firstName, lastName, email, account, password, authorities);
 	    userDao.saveUser(user);
 		userDao.saveUserAuthorities(user.getUsername(),user.getAuthorities());
 	    return user;
