@@ -5,11 +5,13 @@ public class Item {
 	private final int id;
 	private final String name;
 	private final Double amount;
-	public Item(int id, String name, Double amount) {
+	private final int maxDenomination;
+	public Item(int id, String name, Double amount, Integer maxDenomination) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.amount = amount;
+		this.maxDenomination = maxDenomination;
 	}
 	public int getId() {
 		return id;
@@ -20,5 +22,7 @@ public class Item {
 	public Double getAmount() {
 		return amount;
 	}
-
+	public Integer getMaxDenomination() {
+		return maxDenomination;
+	}
 }
