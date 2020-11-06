@@ -14,7 +14,7 @@ import com.sjwi.budget.model.mail.Email;
 @Component
 public class Mailer {
 	
-	@Value("${BUDGET_MAIL_LEVEL}")
+	@Value("${BUDGET_PREVIEW_MAIL_LEVEL}")
 	private String mailLevel;
 	
 	@Autowired

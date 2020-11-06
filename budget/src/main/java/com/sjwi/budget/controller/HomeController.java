@@ -61,7 +61,11 @@ public class HomeController {
 	}
 
 	@RequestMapping(value="/login", method=RequestMethod.GET)
-	public ModelAndView login() {
+	public ModelAndView login(Authentication auth) {
+		System.out.println(auth);
+		if (null != auth && !("anonymousUser").equals(auth.getName())) {
+			return new ModelAndView("redirect:/");
+		}
 		return new ModelAndView("login");
 	}
 	
