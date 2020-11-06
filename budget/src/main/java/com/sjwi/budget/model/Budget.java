@@ -36,10 +36,14 @@ public class Budget {
     public Map<Integer,Integer> getDenominationMapForItems(){
     	Map<Integer, Integer> billMap = Arrays.stream(new Integer[] {100,50,20,10,5,1})
     										.collect(LinkedHashMap::new,(map, denomination) -> map.put(denomination, 0),Map::putAll);
-    	items.stream().map(i -> i.getAmount().intValue()).forEach(itemAmt -> {
+    	items.stream().forEach(item -> {
+    		Integer itemAmt = item.getAmount().intValue();
 			Iterator<Map.Entry<Integer, Integer>> itr = billMap.entrySet().iterator(); 
 			while (itemAmt > 0) {
 				Map.Entry<Integer, Integer> billEntry = itr.next();
+				while (billEntry.getKey() > item.getMaxDenomination()) {
+					billEntry = itr.next();
+				}
 				billMap.put(billEntry.getKey(), billEntry.getValue() + itemAmt / billEntry.getKey());
 				itemAmt = itemAmt % billEntry.getKey();
 			}

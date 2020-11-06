@@ -32,7 +32,7 @@ public class PdfGenerator {
 	public static final String PDF_SUB_DIRECTORY = "pdf_dir";
 	private static final int DEF_FONT = 12;
 	private static final int DEF_TITLE_FONT = 16;
-	private static final int DEF_LEADING = 18;
+	private static final int DEF_LEADING = 18; 
 	private final Budget budget;
 	private final String file;
 	private final String contextFilePath;
@@ -50,10 +50,10 @@ public class PdfGenerator {
 		
 	}
 	
-	public String buildFile() throws Exception {
+	public String buildFile(String account) throws Exception {
 
 		try {
-			writer.setPageEvent(new DrawHeaderAndFooter());
+			writer.setPageEvent(new DrawHeaderAndFooter(account));
 			document.open();
 			document.add(buildTitle(budget.getName()));
 			document.add(buildBudgetTable());
@@ -77,12 +77,14 @@ public class PdfGenerator {
 	}
 
 	private PdfPTable buildBudgetTable() {
-		PdfPTable table = new PdfPTable(2);
+		PdfPTable table = new PdfPTable(new float[] { 50, 30, 20 });
 		table.addCell(buildTitleFromText("Budget Item",Element.ALIGN_LEFT));
+		table.addCell(buildTitleFromText("Max. Denomination",Element.ALIGN_CENTER));
 		table.addCell(buildTitleFromText("Amount",Element.ALIGN_RIGHT));
 		for (Item item: budget.getItems()) {
 			table.addCell(buildCellFromText(item.getName(),Paragraph.ALIGN_LEFT));
-			table.addCell(buildCellFromText("$" + item.getAmount(), Paragraph.ALIGN_RIGHT));
+			table.addCell(buildCellFromText("$" + String.format("%.2f",item.getMaxDenomination().doubleValue()),Paragraph.ALIGN_CENTER));
+			table.addCell(buildCellFromText("$" + String.format("%.2f",item.getAmount()), Paragraph.ALIGN_RIGHT));
 		}
 		table.addCell("");
 		table.addCell(buildCellFromText("Total: $" + budget.getItems().stream().map(i -> i.getAmount()).reduce(Double::sum).get(), Paragraph.ALIGN_RIGHT));
@@ -137,13 +139,16 @@ public class PdfGenerator {
 	
 	public class DrawHeaderAndFooter extends PdfPageEventHelper {
 		private final String headerText;
+		private final String account;
 		
-		DrawHeaderAndFooter(){
+		DrawHeaderAndFooter(String account){
 			this.headerText = new SimpleDateFormat("MM/dd/yyyy").format(new Date());
+			this.account = account;
 		}
 		@Override
 		public void onStartPage(PdfWriter writer, Document document) {
 			addHeader(headerText, 545, 815, Element.ALIGN_RIGHT);
+			addHeader("Account #" + account, 55, 815, Element.ALIGN_LEFT);
 			addFooter(writer, document.getPageNumber());
 		}
 		private void addHeader(String headerText, int x, int y, int alignment) {

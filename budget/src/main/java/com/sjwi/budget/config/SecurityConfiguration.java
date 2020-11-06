@@ -1,5 +1,7 @@
 package com.sjwi.budget.config;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -32,10 +34,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity)
       throws Exception {
         httpSecurity.authorizeRequests()
-        	.antMatchers("/**").permitAll()
-        	.and()
-        	.formLogin()
-        	.defaultSuccessUrl("/")
+        	.antMatchers("/favicon.ico").permitAll()
+        	.antMatchers("/login").permitAll()
+        	.antMatchers("/css/**").permitAll()
+        	.antMatchers("/js/**").permitAll()
+        	.antMatchers("/images/**").permitAll()
+        	.antMatchers("/**").access("hasAuthority('USER')")
+        	.and().formLogin().loginPage("/login")
           .and().requestCache().requestCache(requestCache())
         	.and().logout()
         	.logoutSuccessUrl("/login")
@@ -44,6 +49,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.httpStrictTransportSecurity().disable();;
         httpSecurity.csrf().disable(); //Required for AJAX requests to be authorized
     }
+	
+	@PostConstruct
+	public void printHash() {
+		System.out.println(passwordEncoder().encode("admin"));
+	}
 	
 	@Bean
 	public RequestCache requestCache() {

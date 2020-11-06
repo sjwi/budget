@@ -14,14 +14,16 @@ public class BudgetUser extends User {
 	private final String lastName;
 	private final String email;
 	private final String fullName;
+	private final String account;
 	
-	public BudgetUser(String username, String firstName, String lastName, String email, String password,
+	public BudgetUser(String username, String firstName, String lastName, String email, String account, String password,
 			Collection<? extends GrantedAuthority> authorities) {
 		super(username,password,true,true,true,true,authorities);
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.fullName = firstName + " " + lastName;
+		this.account = account;
 	}
 
 	public String getFirstName() {
@@ -35,5 +37,8 @@ public class BudgetUser extends User {
 	}
 	public String getFullName() {
 		return fullName;
+	}
+	public String getAccount() {
+		return account;
 	}
 }

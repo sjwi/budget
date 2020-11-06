@@ -3,6 +3,16 @@
 		<td>
 			<input th:value="${item == null? '': item.name}" type="text" class="form-control item-name" placeholder="Item name..." name="item_name" title="Enter a budget item">
 		</td>
+		<td>
+			<select class="form-control item-max-denom" name="item_denom">
+				<option th:selected="${item == null || 100 == item.maxDenomination}" value="100">100</option>
+				<option th:selected="${item != null && 50 == item.maxDenomination}" value="50">50</option>
+				<option th:selected="${item != null && 20 == item.maxDenomination}" value="20">20</option>
+				<option th:selected="${item != null && 10 == item.maxDenomination}" value="10">10</option>
+				<option th:selected="${item != null && 5 == item.maxDenomination}" value="5">5</option>
+				<option th:selected="${item != null && 1 == item.maxDenomination}" value="1">1</option>
+			</select>
+		</td>
 		<td class="align-middle">
 			<div class="row no-gutters">
 				<div class="col">

@@ -23,13 +23,13 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	public BudgetUser createUser(String username, String firstName, String lastName, String email, String password, List<String> authorityNames) {
+	public BudgetUser createUser(String username, String firstName, String lastName, String email, String password, String account, List<String> authorityNames) {
 		password = passwordEncoder.encode(password);
 	    List <SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
 	    authorityNames.stream().forEach(a -> {
 			authorities.add(new SimpleGrantedAuthority(a.toUpperCase()));
 	    });
-	    BudgetUser user = new BudgetUser(username.trim().toLowerCase(), firstName, lastName, email, password, authorities);
+	    BudgetUser user = new BudgetUser(username.trim().toLowerCase(), firstName, lastName, email, account, password, authorities);
 	    userDao.saveUser(user);
 		userDao.saveUserAuthorities(user.getUsername(),user.getAuthorities());
 	    return user;

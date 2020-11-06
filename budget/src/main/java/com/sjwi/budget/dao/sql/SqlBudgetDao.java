@@ -99,6 +99,7 @@ public class SqlBudgetDao implements BudgetDao {
 				ps.setInt(1,templateId);
 				ps.setString(2,items.get(i).getName());
 				ps.setDouble(3,items.get(i).getAmount());
+				ps.setInt(4,items.get(i).getMaxDenomination());
 			}
 			public int getBatchSize() {
 				return items.size();
@@ -118,7 +119,7 @@ public class SqlBudgetDao implements BudgetDao {
 		return jdbcTemplate.query(queryStore.get("getItemsForBudgetById"), new Object[] {budgetId}, r -> {
 			List<Item> items = new ArrayList<>();
 			while (r.next()) {
-				items.add(new Item(r.getInt("ID"),r.getString("NAME"),r.getDouble("AMOUNT")));
+				items.add(new Item(r.getInt("ID"),r.getString("NAME"),r.getDouble("AMOUNT"),r.getInt("MAX_DENOM")));
 			}
 			return items;
 		});
