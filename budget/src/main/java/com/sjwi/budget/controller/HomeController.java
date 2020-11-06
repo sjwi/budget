@@ -66,10 +66,12 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/create/template", method = RequestMethod.POST)
-	public void createTemplate(HttpServletResponse response, HttpServletRequest request, @RequestParam("item_name") List<String> items, @RequestParam("item_amount") List<Double> amounts, @RequestParam("budgetName") String templateName) throws IOException {
+	public void createTemplate(HttpServletResponse response, HttpServletRequest request, 
+			@RequestParam("item_name") List<String> items, @RequestParam("item_max_denom") List<Integer> maxDenomination,
+			@RequestParam("item_amount") List<Double> amounts, @RequestParam("budgetName") String templateName) throws IOException {
 		Budget templateBudget = new Budget(0,templateName, 
 				IntStream.range(0, items.size()).boxed()
-						.map(i -> new Item(0,items.get(i),amounts.get(i)))
+						.map(i -> new Item(0,items.get(i),amounts.get(i),maxDenomination.get(i)))
 						.filter(i -> i.getName() != null && !i.getName().isEmpty() && i.getAmount() != null)
 						.collect(Collectors.toList())
 				);
@@ -83,17 +85,39 @@ public class HomeController {
 		response.sendRedirect(request.getContextPath() + "/");
 	}
 
-	@RequestMapping(value = "/budget/edit", method = {RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value = "/budget/edit", method = {RequestMethod.GET})
 	public void editTemplate(HttpServletResponse response, 
 			HttpServletRequest request,
-			@RequestParam("item_name[]") List<String> items, 
+			@RequestParam(value="item_name[]") List<String> items, 
 			@RequestParam(value="budgetId", required=true) int budgetId, 
 			@RequestParam("item_amount[]") List<Double> amounts, 
+			@RequestParam("item_denom[]") List<Integer> denominations, 
 			@RequestParam(name="redirect", required=false) String redirect, 
 			@RequestParam("budgetName") String budgetName) throws IOException {
 		Budget templateBudget = new Budget(budgetId,budgetName, 
 				IntStream.range(0, items.size()).boxed()
-						.map(i -> new Item(0,items.get(i),amounts.get(i)))
+						.map(i -> new Item(0,items.get(i),amounts.get(i),denominations.get(i)))
+						.filter(i -> i.getName() != null && !i.getName().isEmpty() && i.getAmount() != null)
+						.collect(Collectors.toList())
+				);
+		budgetService.editBudget(templateBudget);
+		if (redirect != null && !redirect.isEmpty()) {
+			response.sendRedirect(request.getContextPath() + "/");
+		}
+	}
+	
+	@RequestMapping(value = "/budget/edit", method = {RequestMethod.POST})
+	public void editTemplateViaForm(HttpServletResponse response, 
+			HttpServletRequest request,
+			@RequestParam(value="item_name") List<String> items, 
+			@RequestParam(value="budgetId", required=true) int budgetId, 
+			@RequestParam("item_amount") List<Double> amounts, 
+			@RequestParam("item_denom") List<Integer> denominations, 
+			@RequestParam(name="redirect", required=false) String redirect, 
+			@RequestParam("budgetName") String budgetName) throws IOException {
+		Budget templateBudget = new Budget(budgetId,budgetName, 
+				IntStream.range(0, items.size()).boxed()
+						.map(i -> new Item(0,items.get(i),amounts.get(i),denominations.get(i)))
 						.filter(i -> i.getName() != null && !i.getName().isEmpty() && i.getAmount() != null)
 						.collect(Collectors.toList())
 				);

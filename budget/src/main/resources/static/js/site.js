@@ -29,6 +29,7 @@ function updateFocusedBudget(){
 	var validInputs = true;
 	var items = [];
 	var amounts = [];
+	var denoms = [];
 	$('.editable-item.item-name:visible').each(function(){
 		if (!isItemValid($(this).text())){
 			$(this).addClass('invalid-form-input');
@@ -56,8 +57,11 @@ function updateFocusedBudget(){
 			$(this).removeClass('invalid-form-input');
 		}
 		amounts.push($(this).text());
-		updateBillCalculator();
 	})
+	$('.focused-budget-table .item-denom:visible').each(function(){
+		denoms.push($(this).val());
+	})
+	updateBillCalculator();
 	if (!validInputs){
 		return;
 	}
@@ -71,6 +75,7 @@ function updateFocusedBudget(){
 			item_name: items,
 			budgetId: budgetId,
 			item_amount: amounts,
+			item_denom: denoms,
 			budgetName: budgetName
 		},
 		beforeSend: function(){
@@ -90,21 +95,34 @@ function updateFocusedBudget(){
 }
 function updateBillCalculator(){
 	var items = [];
+	var maxDenoms = [];
 	$('.editable-item.item-amount:visible').each(function(){
 		items.push($(this).text());
 	});
+	$('.focused-budget-table .item-denom:visible').each(function(){
+		maxDenoms.push($(this).val());
+	});
 	billMap = initializeBillMap();
 	for (var i=0; i < items.length; i++){
-		for (var [bill, count] of billMap){
-			data = numberOfBillsInAmount(bill,items[i]);
-			billMap.set(bill,count + data[0]);
-			items[i] = data[1];
+		const itr = billMap[Symbol.iterator]();
+		while(items[i] > 0){
+			var entry = itr.next().value;
+			console.log(entry[0],maxDenoms[i])
+			while (entry[0] > maxDenoms[i]){
+				entry = itr.next().value;
+			}
+			billMap.set(entry[0], entry[1] + parseInt(items[i] / entry[0]));
+			items[i] = items[i] % entry[0];
 		}
 	}
+	var total = 0;
 	for (var [bill, count] of billMap){
+		total = total + (bill * count);
 		$('.bill-count.' + bill.toString()).html(count);
 	}
+	$('.total').html(numberWithCommas(total));
 }
+
 function initializeBillMap(){
 	var billMap = new Map();
 	billMap.set(100,0);
@@ -115,14 +133,11 @@ function initializeBillMap(){
 	billMap.set(1,0);
 	return billMap;
 }
-function numberOfBillsInAmount(bill, amount){
-	var billCounter = 0;
-	while(amount >= bill){
-		billCounter++;
-		amount = amount - bill;
-	}
-	return [billCounter, amount];
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+
 function deleteBudget(id){
 	$.ajax({
 		url: contextpath +  'budget/disable/' + id,
@@ -355,6 +370,10 @@ $(document).ready(function(){
 			updateFocusedBudget();
 			$('.focused-budget-table').sortable('enable');
 		}
+	});
+
+	$(document).on('change','.item-denom', function(){
+		updateFocusedBudget();
 	});
 
 	$(document).on('blur','#dynamicInput', function(){

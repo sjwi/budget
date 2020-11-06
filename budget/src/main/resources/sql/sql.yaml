@@ -14,7 +14,7 @@ getAuthoritiesByUsername: >
   SELECT * FROM Authorities WHERE USERNAME = ?
 
 insertBudgetItems: >
-  INSERT INTO Item (BUDGET_ID,NAME, AMOUNT) values (?,?,?)
+  INSERT INTO Item (BUDGET_ID,NAME, AMOUNT, MAX_DENOM) values (?,?,?,?)
 
 createNewTemplate: >
   INSERT INTO BudgetMaster (NAME,LAST_USED,IS_TEMPLATE) values (?,CURRENT_TIMESTAMP,1)
@@ -50,4 +50,4 @@ getLatestBudget: >
   SELECT * FROM BudgetMaster WHERE IS_TEMPLATE = 0 and DISABLED = 0 ORDER BY ID desc LIMIT 1
 
 cloanBudgetItems: >
-  INSERT INTO Item (BUDGET_ID,NAME,AMOUNT) select ?,NAME,AMOUNT from Item where BUDGET_ID = ?
+  INSERT INTO Item (BUDGET_ID,NAME,AMOUNT,MAX_DENOM) select ?,NAME,AMOUNT,MAX_DENOM from Item where BUDGET_ID = ?

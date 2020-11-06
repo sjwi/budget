@@ -245,8 +245,12 @@ div.remove-row.active {
 		padding-left: .3rem !important;
 		padding-right: .3rem !important;
 	}
-	.focused-budget-table .form-control{
-		max-width:60px;
+	.focused-budget-table input.form-control{
+		max-width:120px;
+	}
+	.focused-budget-table .currency > input.form-control{
+		max-width:45px;
+		font-size:.75rem;
 	}
 	.bill-calculator div, .bill-calculator span {
 		font-size : .75rem !important;
@@ -263,6 +267,13 @@ div.remove-row.active {
 		font-size: .75rem;
 	}
 	.focused-budget-table .item-label-cell {
-		width:70%;
+		width:58%;
+	}
+	.focused-budget-table .item-label-cell .editable-item {
+		vertical-align:middle;
+		width:130px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 }

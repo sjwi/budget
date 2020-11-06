@@ -17,6 +17,7 @@
 					<thead class="table-info bg-table-custom">
 						<tr>
 							<th><a href="javascript:SortTable(0,'T')" class="text-white budget-h">Budget Item</a></th>
+							<th class="text-right">Max Bill</th>
 							<th class="text-right"><a href="javascript:SortTable(1,'N')" class="text-white">Amount</a></th>
 						</tr>
 					</thead>
@@ -34,6 +35,16 @@
 								</div>
 								<div class="editable-item item-name d-inline-block" th:text="${item.name}">
 								</div>
+							</td>
+							<td class="text-right">
+								<select class="btn btn-sm pb-0 pt-0 pl-0 pr-0 item-denom">
+									<option value="100" th:selected="${item.maxDenomination == 100}">100</option>
+									<option value="50" th:selected="${item.maxDenomination == 50}">50</option>
+									<option value="20" th:selected="${item.maxDenomination == 20}">20</option>
+									<option value="10" th:selected="${item.maxDenomination == 10}">10</option>
+									<option value="5" th:selected="${item.maxDenomination == 5}">5</option>
+									<option value="1" th:selected="${item.maxDenomination == 1}">1</option>
+								</select>
 							</td>
 							<td>
 								<div class="text-right">
@@ -100,7 +111,7 @@
 		<div class="row no-gutters pt-2 table-info bg-table-custom">
 			<div class="col">
 				<div class="text-right pr-2">
-					Total: $<span class="total" th:text="${#numbers.formatDecimal(#aggregates.sum(budget.items.![amount]), 1, 'DEFAULT', 2, 'DEFAULT')}">0.00</span>
+					Total: $<span class="total">0.00</span>
 				</div>
 			</div>
 		</div>
