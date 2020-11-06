@@ -64,11 +64,12 @@ CREATE TABLE Users (
   FIRSTNAME varchar(100) NOT NULL,
   LASTNAME varchar(100) NOT NULL,
   EMAIL varchar(100) NOT NULL,
+  ACCOUNT varchar(100) NOT NULL,
   enabled tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (username)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO Users VALUES ('demo_user','$2a$10$B7glwKe20USo1GkMLNSUUe14FUbyLleY2tt7ugx4AEpAPJpkDTUeK','Demo','User','demo_user@stephenky.com',1);
+INSERT INTO Users VALUES ('demo_user','$2a$10$B7glwKe20USo1GkMLNSUUe14FUbyLleY2tt7ugx4AEpAPJpkDTUeK','Demo','User','demo_user@stephenky.com','999999999',1);
 
 DROP TABLE IF EXISTS Authorities;
 CREATE TABLE Authorities (

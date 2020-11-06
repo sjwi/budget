@@ -1,2 +1,4 @@
 /target/
 /.project
+
+/src/main/webapp/pdf_dir/*

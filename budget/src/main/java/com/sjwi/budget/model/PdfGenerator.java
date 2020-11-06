@@ -50,10 +50,10 @@ public class PdfGenerator {
 		
 	}
 	
-	public String buildFile() throws Exception {
+	public String buildFile(String account) throws Exception {
 
 		try {
-			writer.setPageEvent(new DrawHeaderAndFooter());
+			writer.setPageEvent(new DrawHeaderAndFooter(account));
 			document.open();
 			document.add(buildTitle(budget.getName()));
 			document.add(buildBudgetTable());
@@ -137,13 +137,16 @@ public class PdfGenerator {
 	
 	public class DrawHeaderAndFooter extends PdfPageEventHelper {
 		private final String headerText;
+		private final String account;
 		
-		DrawHeaderAndFooter(){
+		DrawHeaderAndFooter(String account){
 			this.headerText = new SimpleDateFormat("MM/dd/yyyy").format(new Date());
+			this.account = account;
 		}
 		@Override
 		public void onStartPage(PdfWriter writer, Document document) {
 			addHeader(headerText, 545, 815, Element.ALIGN_RIGHT);
+			addHeader("Account #" + account, 55, 815, Element.ALIGN_LEFT);
 			addFooter(writer, document.getPageNumber());
 		}
 		private void addHeader(String headerText, int x, int y, int alignment) {

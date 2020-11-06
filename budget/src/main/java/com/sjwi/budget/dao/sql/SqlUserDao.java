@@ -53,6 +53,7 @@ public class SqlUserDao implements UserDao {
 						r.getString("LASTNAME"),
 						r.getString("EMAIL"),
 						r.getString("PASSWORD"),
+						r.getString("ACCOUNT"),
 						getUserAuthorities(r.getString("USERNAME")));
 			} else {
 				return null;

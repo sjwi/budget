@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +34,7 @@ import com.sjwi.budget.model.Budget;
 import com.sjwi.budget.model.Item;
 import com.sjwi.budget.model.PdfGenerator;
 import com.sjwi.budget.model.mail.EmailWithAttachment;
+import com.sjwi.budget.model.user.BudgetUser;
 import com.sjwi.budget.service.BudgetService;
 
 @Controller
@@ -126,13 +128,13 @@ public class HomeController {
 		return mv;
 	}
 	@RequestMapping(value = {"download/{id}/{pdf_name}"}, method = RequestMethod.GET)
-	public void downloadPdf(HttpServletRequest request, HttpServletResponse response,
+	public void downloadPdf(HttpServletRequest request, HttpServletResponse response, Authentication auth,
 			@PathVariable int id) throws IOException {
 		try {
 			PdfGenerator pdfGenerator = new PdfGenerator(budgetService.getBudget(id));
 			response.setContentType("application/pdf; name=\"budget.pdf\"");
             response.addHeader("Content-Disposition", "inline; filename=\"budget.pdf\"");
-            Files.copy(Paths.get(pdfGenerator.buildFile()), response.getOutputStream());
+            Files.copy(Paths.get(pdfGenerator.buildFile(((BudgetUser)auth.getPrincipal()).getAccount())), response.getOutputStream());
 		} catch (Exception e) {
 			e.printStackTrace();
 			response.sendRedirect(request.getContextPath() + "/error");
@@ -140,10 +142,10 @@ public class HomeController {
 	}
 	@RequestMapping(value = {"email/budget/{id}"}, method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
-	public void emailBudget(HttpServletRequest request, HttpServletResponse response,
+	public void emailBudget(HttpServletRequest request, HttpServletResponse response, Authentication auth,
 			@PathVariable int id, @RequestParam String emailTo) throws Exception {
 		PdfGenerator pdfGenerator = new PdfGenerator(budgetService.getBudget(id));
-		pdfGenerator.buildFile();
+		pdfGenerator.buildFile(((BudgetUser)auth.getPrincipal()).getAccount());
 		Map<String, String> attachments = new HashMap<>();
 		attachments.put(pdfGenerator.getFileName(), "budget.pdf");
 		mailer.sendMail(new EmailWithAttachment().setAttachments(attachments).setTo(emailTo.replace(";", ",")).setSubject(PDF_SUBJECT).setBody(PDF_BODY));
