@@ -87,6 +87,7 @@ public class PdfGenerator {
 			table.addCell(buildCellFromText("$" + String.format("%.2f",item.getAmount()), Paragraph.ALIGN_RIGHT));
 		}
 		table.addCell("");
+		table.addCell("");
 		table.addCell(buildCellFromText("Total: $" + budget.getItems().stream().map(i -> i.getAmount()).reduce(Double::sum).get(), Paragraph.ALIGN_RIGHT));
 		table.setSpacingAfter(20);
 		return table;
