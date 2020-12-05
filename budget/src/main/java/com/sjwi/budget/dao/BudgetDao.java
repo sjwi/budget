@@ -1,4 +1,4 @@
-package com.sjwi.budget.service;
+package com.sjwi.budget.dao;
 
 import java.util.List;
 

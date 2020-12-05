@@ -1,0 +1,36 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Debug (Launch) - Current File",
+            "request": "launch",
+            "mainClass": "${file}",
+            "env": {
+                "BUDGET_MAIL_DBL": "stephenjw@fastmail.com",
+                "BUDGET_MAIL_PW": "dummy_val",
+                "BUDGET_MAIL_UN": "stephenjw@fastmail.com",
+                "BUDGET_MAIL_LEVEL": "DEBUG",
+                "BUDGET_MAIL_SMTP": "smtp.fastmail.com",
+                "BUDGET_MAIL_PORT": "587",
+                "BUDGET_DATASOURCE_INIT": "always",
+                "BUDGET_JDBC_DATASOURCE_URL": "jdbc:h2:mem:BUDGET;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE",
+                "BUDGET_JDBC_DRIVER": "com.mysql.jdbc.Driver",
+                "BUDGET_JDBC_DRIVER_H2": "org.h2.Driver",
+                "BUDGET_JDBC_PASSWORD": "sa",
+                "BUDGET_JDBC_PLATFORM": "org.hibernate.dialect.H2Dialect",
+                "BUDGET_JDBC_USERNAME": "sa"
+            }
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-BudgetWebApplication<budget>",
+            "request": "launch",
+            "mainClass": "com.sjwi.budget.BudgetWebApplication",
+            "projectName": "budget"
+        }
+    ]
+}

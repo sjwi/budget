@@ -6,14 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.sjwi.budget.dao.BudgetDao;
+import com.sjwi.budget.model.Budget;
+import com.sjwi.budget.model.Item;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-
-import com.sjwi.budget.model.Budget;
-import com.sjwi.budget.model.Item;
-import com.sjwi.budget.service.BudgetDao;
 
 @Component
 public class SqlBudgetDao implements BudgetDao {
@@ -30,7 +30,7 @@ public class SqlBudgetDao implements BudgetDao {
 		insertBudgetItems(templateId,budget.getItems());
 	}
 	@Override
-	public void editBudget(Budget budget) {
+	public synchronized void editBudget(Budget budget) {
 		deleteBudgetItems(budget.getId());
 		updateBudget(budget);
 		insertBudgetItems(budget.getId(),budget.getItems());
