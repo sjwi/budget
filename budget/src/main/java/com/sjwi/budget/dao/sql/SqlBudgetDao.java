@@ -30,7 +30,7 @@ public class SqlBudgetDao implements BudgetDao {
 		insertBudgetItems(templateId,budget.getItems());
 	}
 	@Override
-	public synchronized void editBudget(Budget budget) {
+	public void editBudget(Budget budget) {
 		deleteBudgetItems(budget.getId());
 		updateBudget(budget);
 		insertBudgetItems(budget.getId(),budget.getItems());

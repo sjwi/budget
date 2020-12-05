@@ -11,6 +11,7 @@ import com.sjwi.budget.model.Budget;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+
 @Component
 public class BudgetService {
 
@@ -33,7 +34,7 @@ public class BudgetService {
 		return budgetDao.getBudgetById(id);
 	}
 
-	public void editBudget(Budget budget) {
+	public synchronized void editBudget(Budget budget) {
 		budgetDao.editBudget(budget);
 	}
 
