@@ -90,7 +90,10 @@ function updateFocusedBudget(){
 			$('.saved-indicator').hide();
 			$('.saved-indicator.saved').show();
 		},
-		error: function(){
+		error: function(request, textStatus, errorThrown){
+			if (request.statusText =='abort') {
+				return;
+			}
 			alertWithFade('danger','Unable to save budget');
 			$('.saved-indicator').hide();
 			$('.save-failed').show();
