@@ -332,7 +332,8 @@ $(document).ready(function(){
 	
 
 	$(document).on('hide show','.focused-budget-table tr',function(){
-			setTimeout(function(){updateFocusedBudget();},300);
+			updateFocusedBudget();
+//			setTimeout(function(){updateFocusedBudget();},300);
 	});
 
 	$(document).on('click', '.new-budget-btn',function(){
