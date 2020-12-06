@@ -1,6 +1,7 @@
 //Global Variables
 var deletedRow;
 var dynamicParent;
+var updateRequest;
 
 //Static Functions
 function notImplimented(){
@@ -68,7 +69,7 @@ function updateFocusedBudget(){
 	
 	var budgetName = $('.focused-budget-name').text();
 	var budgetId = $('.focused-budget-id').val();
-	$.ajax({
+	updateRequest = $.ajax({
 		url: contextpath +  'budget/edit',
 		type: 'GET',
 		data: {
@@ -79,6 +80,9 @@ function updateFocusedBudget(){
 			budgetName: budgetName
 		},
 		beforeSend: function(){
+			if(updateRequest != null) {
+				updateRequest.abort();
+			}
 			$('.saved-indicator').hide();
 			$('.saved-indicator.saving').show();
 		},
