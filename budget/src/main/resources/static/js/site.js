@@ -14,7 +14,7 @@ function isItemValid(name){
 }
 function isCurrencyValid(amount) {
   var regex = /^[0-9]+(\.[0-9]{1,2})?$/;
-  return regex.test(amount);
+  return amount != '' && regex.test(amount);
 }
 (function ($) {
 	  $.each(['show', 'hide'], function (i, ev) {
@@ -46,6 +46,9 @@ function updateFocusedBudget(){
 		items.push($(this).text());
 	})
 	$('.editable-item.item-amount:visible').each(function(){
+		if ($(this).text() == '') {
+			$(this).text('0.00');
+		}
 		if (!isCurrencyValid($(this).text())){
 			$(this).addClass('invalid-form-input');
 			alertWithFade('danger','Amount must be a valid number');
@@ -114,7 +117,6 @@ function updateBillCalculator(){
 		const itr = billMap[Symbol.iterator]();
 		while(items[i] > 0){
 			var entry = itr.next().value;
-			console.log(entry[0],maxDenoms[i])
 			while (entry[0] > maxDenoms[i]){
 				entry = itr.next().value;
 			}
