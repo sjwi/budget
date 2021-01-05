@@ -79,7 +79,7 @@ function updateFocusedBudget(){
 			item_name: items,
 			budgetId: budgetId,
 			item_amount: amounts,
-			item_denom: denoms,
+			item_max_denom: denoms,
 			budgetName: budgetName
 		},
 		beforeSend: function(){
