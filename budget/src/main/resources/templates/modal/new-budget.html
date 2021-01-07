@@ -38,7 +38,7 @@
 						<div th:each="template: ${templates}" class="d-inline-block ml-3 mt-3 mb-3 pr-3 budget-template-wrapper" th:id="${'budgetPicker_' + template.id}">
 							<div class="budget-container d-flex" th:attr="data-target=${template.id}">
 								<div class="my-auto text-center w-100" th:text="${template.name}"></div>
-								<div class="delete-budget-icon" title="Click to edit template">
+								<div class="delete-budget-icon" title="Click to delete template">
 									<img th:src="@{/images/close.png}">
 								</div>
 								<div class="edit-budget-icon" title="Click to edit template">
@@ -51,6 +51,11 @@
 								<div class="my-auto text-center">Create New Template</div>
 							</div>
 						</div>
+					</div>
+				</div>
+				<div class="row no-gutters mt-3">
+					<div class="col-md-8 offset-2">
+						<input class="form-control" name="budgetDescription" id="budgetDescription" placeholder="Description (optional)" type="text">
 					</div>
 				</div>
 				<div class="row no-gutters mt-3">

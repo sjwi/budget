@@ -152,6 +152,7 @@ function deleteBudget(id){
 		url: contextpath +  'budget/disable/' + id,
 		type: 'POST',
 		success: function(response){
+			$('#budgetPicker_' + id).closest('.budget-template-wrapper, .budget-wrapper').removeClass("d-inline-block");
 			$('#budgetPicker_' + id).closest('.budget-template-wrapper, .budget-wrapper').hide();
 			if (!$('#budgetPicker_' + id).closest('.budget-template-wrapper').length){
 				location.reload();
@@ -338,11 +339,11 @@ $(document).ready(function(){
 	});
 
 	$(document).on('click', '.new-budget-btn',function(){
-		$('<form action="' + contextpath + 'create/budget" method="POST"><input type="hidden" name="month" value="' + $('#newBudgetMonth').val() +'">"</form>').appendTo('body').submit();	
+		$('<form action="' + contextpath + 'create/budget" method="POST"><input type="hidden" name="month" value="' + $('#newBudgetMonth').val() +'"><input type="hidden" name="budgetDescription" value="' + $('#budgetDescription').val() + '"></form>').appendTo('body').submit();	
 	});
 	$(document).on('click', '.create-from-template .budget-container:not(.new-template)',function(e){
 		if (!$(e.target).is('.delete-budget-icon,.edit-budget-icon,img')){
-			$('<form action="' + contextpath + 'create/budget" method="POST"><input type="hidden" name="month" value="' + $('#newBudgetMonth').val() +'"><input type="hidden" name="template" value="' + $(this).data('target') +'"></form>').appendTo('body').submit();	
+			$('<form action="' + contextpath + 'create/budget" method="POST"><input type="hidden" name="month" value="' + $('#newBudgetMonth').val() +'"><input type="hidden" name="template" value="' + $(this).data('target') +'"><input type="hidden" name="budgetDescription" value="' + $('#budgetDescription').val() + '"></form>').appendTo('body').submit();	
 		}
 	});
 	$(document).on('click', '.budget-picker .budget-container',function(e){

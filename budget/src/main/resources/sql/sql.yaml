@@ -44,7 +44,7 @@ updateBudget: >
   UPDATE BudgetMaster set NAME = ?, LAST_USED = CURRENT_TIMESTAMP where ID = ?
 
 createEmptyBudget: >
-  INSERT INTO BudgetMaster (NAME,LAST_USED) values (?,CURRENT_TIMESTAMP)
+  INSERT INTO BudgetMaster (NAME,DESCRIPTION,LAST_USED) values (?,?,CURRENT_TIMESTAMP)
 
 getLatestBudget: >
   SELECT * FROM BudgetMaster WHERE IS_TEMPLATE = 0 and DISABLED = 0 ORDER BY ID desc LIMIT 1

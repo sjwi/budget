@@ -42,14 +42,14 @@ public class BudgetService {
 		budgetDao.deleteBudget(id);
 	}
 
-	public void createBudget(Optional<Integer> template, int month) {
+	public void createBudget(Optional<Integer> template, String description, int month) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());
 		String year = Integer.toString(cal.get(Calendar.YEAR));
 		if (!template.isPresent()) {
-			budgetDao.createEmptyBudget(getMonthFromInteger(month) + " " + year);
+			budgetDao.createEmptyBudget(getMonthFromInteger(month) + " " + year, description);
 		} else {
-			budgetDao.createBudgetFromTemplate(template.get(), getMonthFromInteger(month) + " " + year);
+			budgetDao.createBudgetFromTemplate(template.get(), getMonthFromInteger(month) + " " + year, description);
 		}
 	}
 	

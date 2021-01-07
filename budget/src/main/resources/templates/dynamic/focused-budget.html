@@ -3,6 +3,7 @@
 		<div class="row no-gutters pt-5">
 			<div class="col text-center">
 				<h2 class="focused-budget-name" th:text="${budget.name}"></h2>
+				<h6 class="focused-budget-name mt-0 pt-0" th:text="${budget.description}"></h6>
 				<div class="position-absolute saved-indicator saved">Saved <span>&#10003;</span></div>
 				<div class="position-absolute saved-indicator saving collapse">Saving...</div>
 				<div class="position-absolute saved-indicator save-failed collapse text-danger">Save Failed!</div>

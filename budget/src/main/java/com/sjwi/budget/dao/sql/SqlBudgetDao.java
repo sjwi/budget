@@ -64,7 +64,7 @@ public class SqlBudgetDao implements BudgetDao {
 	public Budget getBudgetById(int budgetId) {
 		return jdbcTemplate.query(queryStore.get("getBudgetById"), new Object[] {budgetId}, r -> {
 			if (r.next()) {
-				return new Budget(r.getInt("ID"), r.getString("NAME"),getItemsForBudgetById(r.getInt("ID")));
+				return new Budget(r.getInt("ID"), r.getString("NAME"),r.getString("DESCRIPTION"),getItemsForBudgetById(r.getInt("ID")));
 			} else {
 				return null;
 			}
@@ -72,16 +72,16 @@ public class SqlBudgetDao implements BudgetDao {
 	}
 	
 	@Override
-	public int createEmptyBudget(String month) {
-		jdbcTemplate.update(queryStore.get("createEmptyBudget"), new Object[] {month});
+	public int createEmptyBudget(String month, String description) {
+		jdbcTemplate.update(queryStore.get("createEmptyBudget"), new Object[] {month, description});
 		return jdbcTemplate.query(queryStore.get("getLatestBudget"), r -> {
 			r.next();
 			return r.getInt("ID");
 		});
 	}
 	@Override
-	public void createBudgetFromTemplate(Integer templateId, String month) {
-		jdbcTemplate.update(queryStore.get("cloanBudgetItems"), new Object[] {createEmptyBudget(month),templateId});
+	public void createBudgetFromTemplate(Integer templateId, String month, String description) {
+		jdbcTemplate.update(queryStore.get("cloanBudgetItems"), new Object[] {createEmptyBudget(month, description),templateId});
 	}
 
 	private void updateBudget(Budget budget) {

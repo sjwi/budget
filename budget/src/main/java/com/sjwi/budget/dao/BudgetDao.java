@@ -16,9 +16,9 @@ public interface BudgetDao {
 
 	void deleteBudget(int id);
 
-	int createEmptyBudget(String month);
+	int createEmptyBudget(String month, String desc);
 
-	void createBudgetFromTemplate(Integer templateId, String month);
+	void createBudgetFromTemplate(Integer templateId, String month, String description);
 
 	List<Budget> getAllBudgets();
 
