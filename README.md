@@ -1,5 +1,5 @@
 # Monthly Cash Budgeting Application
-A simple budgeting application to help me keep calculate withdraws for my cash envelopes.  
+A simple budgeting application to help me calculate withdrawals for my cash envelopes.  
 [Spring Boot Web Application]
 
 See demo at https://stephenky.com/budget-demo
