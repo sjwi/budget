@@ -9,12 +9,14 @@ import java.util.Map;
 public class Budget {
 	private final int id;
 	private final String name;
+	private final String description;
 	private final List<Item> items;
 	
-	public Budget(int id, String name, List<Item> items) {
+	public Budget(int id, String name, String description, List<Item> items) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.description = description;
 		this.items = items;
 	}
 	public int getId() {
@@ -22,6 +24,9 @@ public class Budget {
 	}
 	public String getName() {
 		return name;
+	}
+	public String getDescription() {
+		return description;
 	}
 	public List<Item> getItems() {
 		return items;

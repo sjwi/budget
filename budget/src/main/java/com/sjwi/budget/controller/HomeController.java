@@ -17,6 +17,14 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sjwi.budget.mail.Mailer;
+import com.sjwi.budget.model.Budget;
+import com.sjwi.budget.model.Item;
+import com.sjwi.budget.model.PdfGenerator;
+import com.sjwi.budget.model.mail.EmailWithAttachment;
+import com.sjwi.budget.model.user.BudgetUser;
+import com.sjwi.budget.service.BudgetService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -29,14 +37,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.sjwi.budget.mail.Mailer;
-import com.sjwi.budget.model.Budget;
-import com.sjwi.budget.model.Item;
-import com.sjwi.budget.model.PdfGenerator;
-import com.sjwi.budget.model.mail.EmailWithAttachment;
-import com.sjwi.budget.model.user.BudgetUser;
-import com.sjwi.budget.service.BudgetService;
 
 @Controller
 public class HomeController {
@@ -74,7 +74,7 @@ public class HomeController {
 	public void createTemplate(HttpServletResponse response, HttpServletRequest request, 
 			@RequestParam("item_name") List<String> items, @RequestParam("item_max_denom") List<Integer> maxDenomination,
 			@RequestParam("item_amount") List<Double> amounts, @RequestParam("budgetName") String templateName) throws IOException {
-		Budget templateBudget = new Budget(0,templateName, 
+		Budget templateBudget = new Budget(0,templateName,"", 
 				IntStream.range(0, items.size()).boxed()
 						.map(i -> new Item(0,items.get(i),amounts.get(i),maxDenomination.get(i)))
 						.filter(i -> i.getName() != null && !i.getName().isEmpty() && i.getAmount() != null)
@@ -85,8 +85,11 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/create/budget", method = RequestMethod.POST)
-	public void createBudget(HttpServletResponse response, HttpServletRequest request, @RequestParam("template") Optional<Integer> template, @RequestParam(value="month", required=true) int month) throws IOException {
-		budgetService.createBudget(template,month);
+	public void createBudget(HttpServletResponse response, HttpServletRequest request, 
+			@RequestParam("template") Optional<Integer> template, 
+			@RequestParam(name="budgetDescription", required=false) String description, 
+			@RequestParam(value="month", required=true) int month) throws IOException {
+		budgetService.createBudget(template,description,month);
 		response.sendRedirect(request.getContextPath() + "/");
 	}
 
@@ -96,10 +99,11 @@ public class HomeController {
 			@RequestParam(value="item_name[]") List<String> items, 
 			@RequestParam(value="budgetId", required=true) int budgetId, 
 			@RequestParam("item_amount[]") List<Double> amounts, 
-			@RequestParam("item_denom[]") List<Integer> denominations, 
+			@RequestParam("item_max_denom[]") List<Integer> denominations, 
 			@RequestParam(name="redirect", required=false) String redirect, 
+			@RequestParam(name="budgetDescription", required=false) String description, 
 			@RequestParam("budgetName") String budgetName) throws IOException {
-		Budget templateBudget = new Budget(budgetId,budgetName, 
+		Budget templateBudget = new Budget(budgetId,budgetName,description,
 				IntStream.range(0, items.size()).boxed()
 						.map(i -> new Item(0,items.get(i),amounts.get(i),denominations.get(i)))
 						.filter(i -> i.getName() != null && !i.getName().isEmpty() && i.getAmount() != null)
@@ -117,10 +121,11 @@ public class HomeController {
 			@RequestParam(value="item_name") List<String> items, 
 			@RequestParam(value="budgetId", required=true) int budgetId, 
 			@RequestParam("item_amount") List<Double> amounts, 
-			@RequestParam("item_denom") List<Integer> denominations, 
+			@RequestParam("item_max_denom") List<Integer> denominations, 
 			@RequestParam(name="redirect", required=false) String redirect, 
+			@RequestParam(name="budgetDescription", required=false) String description, 
 			@RequestParam("budgetName") String budgetName) throws IOException {
-		Budget templateBudget = new Budget(budgetId,budgetName, 
+		Budget templateBudget = new Budget(budgetId,budgetName,description,
 				IntStream.range(0, items.size()).boxed()
 						.map(i -> new Item(0,items.get(i),amounts.get(i),denominations.get(i)))
 						.filter(i -> i.getName() != null && !i.getName().isEmpty() && i.getAmount() != null)

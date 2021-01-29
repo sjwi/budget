@@ -5,10 +5,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import com.sjwi.budget.dao.BudgetDao;
+import com.sjwi.budget.model.Budget;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.sjwi.budget.model.Budget;
 
 @Component
 public class BudgetService {
@@ -32,7 +34,7 @@ public class BudgetService {
 		return budgetDao.getBudgetById(id);
 	}
 
-	public void editBudget(Budget budget) {
+	public synchronized void editBudget(Budget budget) {
 		budgetDao.editBudget(budget);
 	}
 
@@ -40,14 +42,14 @@ public class BudgetService {
 		budgetDao.deleteBudget(id);
 	}
 
-	public void createBudget(Optional<Integer> template, int month) {
+	public void createBudget(Optional<Integer> template, String description, int month) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());
 		String year = Integer.toString(cal.get(Calendar.YEAR));
 		if (!template.isPresent()) {
-			budgetDao.createEmptyBudget(getMonthFromInteger(month) + " " + year);
+			budgetDao.createEmptyBudget(getMonthFromInteger(month) + " " + year, description);
 		} else {
-			budgetDao.createBudgetFromTemplate(template.get(), getMonthFromInteger(month) + " " + year);
+			budgetDao.createBudgetFromTemplate(template.get(), getMonthFromInteger(month) + " " + year, description);
 		}
 	}
 	

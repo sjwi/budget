@@ -1,6 +1,7 @@
 //Global Variables
 var deletedRow;
 var dynamicParent;
+var updateRequest;
 
 //Static Functions
 function notImplimented(){
@@ -13,7 +14,7 @@ function isItemValid(name){
 }
 function isCurrencyValid(amount) {
   var regex = /^[0-9]+(\.[0-9]{1,2})?$/;
-  return regex.test(amount);
+  return amount != '' && regex.test(amount);
 }
 (function ($) {
 	  $.each(['show', 'hide'], function (i, ev) {
@@ -45,6 +46,9 @@ function updateFocusedBudget(){
 		items.push($(this).text());
 	})
 	$('.editable-item.item-amount:visible').each(function(){
+		if ($(this).text() == '') {
+			$(this).text('0.00');
+		}
 		if (!isCurrencyValid($(this).text())){
 			$(this).addClass('invalid-form-input');
 			alertWithFade('danger','Amount must be a valid number');
@@ -68,17 +72,20 @@ function updateFocusedBudget(){
 	
 	var budgetName = $('.focused-budget-name').text();
 	var budgetId = $('.focused-budget-id').val();
-	$.ajax({
+	updateRequest = $.ajax({
 		url: contextpath +  'budget/edit',
 		type: 'GET',
 		data: {
 			item_name: items,
 			budgetId: budgetId,
 			item_amount: amounts,
-			item_denom: denoms,
+			item_max_denom: denoms,
 			budgetName: budgetName
 		},
 		beforeSend: function(){
+			if(updateRequest != null) {
+				updateRequest.abort();
+			}
 			$('.saved-indicator').hide();
 			$('.saved-indicator.saving').show();
 		},
@@ -86,7 +93,10 @@ function updateFocusedBudget(){
 			$('.saved-indicator').hide();
 			$('.saved-indicator.saved').show();
 		},
-		error: function(){
+		error: function(request, textStatus, errorThrown){
+			if (request.statusText =='abort') {
+				return;
+			}
 			alertWithFade('danger','Unable to save budget');
 			$('.saved-indicator').hide();
 			$('.save-failed').show();
@@ -107,7 +117,6 @@ function updateBillCalculator(){
 		const itr = billMap[Symbol.iterator]();
 		while(items[i] > 0){
 			var entry = itr.next().value;
-			console.log(entry[0],maxDenoms[i])
 			while (entry[0] > maxDenoms[i]){
 				entry = itr.next().value;
 			}
@@ -143,6 +152,7 @@ function deleteBudget(id){
 		url: contextpath +  'budget/disable/' + id,
 		type: 'POST',
 		success: function(response){
+			$('#budgetPicker_' + id).closest('.budget-template-wrapper, .budget-wrapper').removeClass("d-inline-block");
 			$('#budgetPicker_' + id).closest('.budget-template-wrapper, .budget-wrapper').hide();
 			if (!$('#budgetPicker_' + id).closest('.budget-template-wrapper').length){
 				location.reload();
@@ -329,11 +339,11 @@ $(document).ready(function(){
 	});
 
 	$(document).on('click', '.new-budget-btn',function(){
-		$('<form action="' + contextpath + 'create/budget" method="POST"><input type="hidden" name="month" value="' + $('#newBudgetMonth').val() +'">"</form>').appendTo('body').submit();	
+		$('<form action="' + contextpath + 'create/budget" method="POST"><input type="hidden" name="month" value="' + $('#newBudgetMonth').val() +'"><input type="hidden" name="budgetDescription" value="' + $('#budgetDescription').val() + '"></form>').appendTo('body').submit();	
 	});
 	$(document).on('click', '.create-from-template .budget-container:not(.new-template)',function(e){
 		if (!$(e.target).is('.delete-budget-icon,.edit-budget-icon,img')){
-			$('<form action="' + contextpath + 'create/budget" method="POST"><input type="hidden" name="month" value="' + $('#newBudgetMonth').val() +'"><input type="hidden" name="template" value="' + $(this).data('target') +'"></form>').appendTo('body').submit();	
+			$('<form action="' + contextpath + 'create/budget" method="POST"><input type="hidden" name="month" value="' + $('#newBudgetMonth').val() +'"><input type="hidden" name="template" value="' + $(this).data('target') +'"><input type="hidden" name="budgetDescription" value="' + $('#budgetDescription').val() + '"></form>').appendTo('body').submit();	
 		}
 	});
 	$(document).on('click', '.budget-picker .budget-container',function(e){
