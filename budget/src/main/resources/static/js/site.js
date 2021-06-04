@@ -275,6 +275,7 @@ $(document).ready(function(){
 	})
 	$(document).on('submit','#newTemplateForm, #editTemplateForm',function(e){
 		$(this).find('input[type="text"]').not('.required').prop('disabled',true);
+		$(this).find('tr:hidden').remove();
 		if (!isFormFilled(this)) {
 			e.preventDefault();
 		}
